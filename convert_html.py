@@ -32,7 +32,7 @@ csv_files = {
         "logo": "afterglow.webp"
     },
     "yumemita.csv": {
-        "name": "Yumemita",
+        "name": "夢限大みゅーたいぷ", # 이 부분을 수정했습니다.
         "color": "#FF69B4", 
         "bg_color": "rgba(255, 105, 180, 0.05)",
         "logo": "yumemita.webp"

@@ -32,7 +32,7 @@ csv_files = {
         "logo": "afterglow.webp"
     },
     "yumemita.csv": {
-        "name": "夢限大みゅーたいぷ", # 이 부분을 수정했습니다.
+        "name": "夢限大みゅーたいぷ",
         "color": "#FF69B4", 
         "bg_color": "rgba(255, 105, 180, 0.05)",
         "logo": "yumemita.webp"
@@ -40,7 +40,7 @@ csv_files = {
 }
 
 # ---------------------------------------------------------
-# HTML 템플릿
+# HTML 템플릿 (CSS 수정됨)
 # ---------------------------------------------------------
 html_template = """
 <!DOCTYPE html>
@@ -92,7 +92,7 @@ html_template = """
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }}
-        .tab-group {{ display: flex; }}
+        .tab-group {{ display: flex; overflow-x: auto; }}
         .tab-button {{
             padding: 6px 14px;
             font-size: 13px;
@@ -104,6 +104,7 @@ html_template = """
             color: #888;
             border-radius: 20px;
             margin-left: 6px;
+            white-space: nowrap;
         }}
         .tab-button:hover {{ background-color: #f0f0f0; color: #333; }}
         .tab-button.active {{
@@ -140,7 +141,28 @@ html_template = """
         }}
         td:first-child {{ border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-left: 1px solid #f9f9f9; }}
         td:last-child {{ border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-right: 1px solid #f9f9f9; }}
-        .song-info-wrapper {{ display: flex; align-items: center; min-width: 280px; }}
+        
+        /* 곡 정보 클릭 영역 스타일 개선 */
+        .song-info-wrapper {{ 
+            display: flex; 
+            align-items: center; 
+            min-width: 200px;
+            padding: 5px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }}
+        /* 가사가 있는 경우 클릭 가능 표시 */
+        .clickable-song {{
+            cursor: pointer;
+        }}
+        .clickable-song:hover {{
+            background-color: #f1f3f5;
+        }}
+        .clickable-song:active {{
+            background-color: #e9ecef;
+            transform: scale(0.99);
+        }}
+
         .album-thumb {{
             width: 52px; height: 52px;
             border-radius: 8px;
@@ -151,16 +173,18 @@ html_template = """
             background-color: #eee;
         }}
         .song-text {{ display: flex; flex-direction: column; }}
-        .song-title-main {{ font-size: 1.1em; font-weight: 700; color: #333; margin-bottom: 2px; }}
-        .song-title-sub {{ font-size: 0.85em; color: #999; }}
-        .meta-info {{ display: flex; flex-direction: column; gap: 4px; font-size: 12px; }}
-        .meta-top {{ display: flex; align-items: center; gap: 8px; }}
+        .song-title-main {{ font-size: 1.05em; font-weight: 700; color: #333; margin-bottom: 2px; }}
+        .song-title-sub {{ font-size: 0.8em; color: #999; }}
+        
+        .meta-info {{ display: flex; flex-direction: column; gap: 4px; font-size: 12px; min-width: 100px; }}
+        .meta-top {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
         .release-date {{ color: #888; font-family: monospace; letter-spacing: -0.5px; }}
         .meta-desc {{ color: #666; font-size: 11px; }}
         .badge {{ padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; }}
         .badge-original {{ background-color: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }}
         .badge-cover {{ background-color: #fff3e0; color: #f57c00; border: 1px solid #ffe0b2; }}
         .badge-tieup {{ background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }}
+        
         .btn {{
             display: inline-flex; align-items: center; justify-content: center;
             text-decoration: none; font-weight: 600; padding: 6px 12px;
@@ -168,9 +192,7 @@ html_template = """
         }}
         .btn-link {{ background-color: #f1f3f5; color: #495057; }}
         .btn-link:hover {{ background-color: #e9ecef; color: #212529; }}
-        .btn-lyrics {{ background-color: #fff0f6; color: #d63384; }}
-        .btn-lyrics:hover {{ background-color: #fcc2d7; color: #a61e4d; }}
-        .btn-disabled {{ opacity: 0.4; cursor: default; }}
+        
         .source-container {{ margin-top: 30px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; }}
         .source-link-btn {{
             display: inline-block; padding: 5px 12px; background-color: #f1f3f5;
@@ -178,6 +200,8 @@ html_template = """
         }}
         .source-link-btn:hover {{ background-color: #e9ecef; color: #495057; }}
         .footer {{ margin-top: auto; font-size: 11px; color: #ccc; text-align: center; padding-bottom: 10px; }}
+        
+        /* 모달 창 */
         .modal-overlay {{
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 1000;
@@ -191,6 +215,12 @@ html_template = """
         .modal-body {{ padding: 30px; overflow-y: auto; line-height: 1.8; white-space: pre-wrap; font-size: 16px; text-align: center; color: #444; }}
         .close-btn {{ font-size: 28px; cursor: pointer; border: none; background: none; color: #ccc; }}
         .close-btn:hover {{ color: #333; }}
+        
+        /* 모바일 대응: 표 헤더 숨김 등 */
+        @media (max-width: 600px) {{
+            th {{ display: none; }} /* 헤더 숨김으로 공간 절약 */
+            .song-info-wrapper {{ min-width: auto; }}
+        }}
     </style>
 </head>
 <body>
@@ -255,26 +285,7 @@ for index, (file, info) in enumerate(csv_files.items()):
         print(f"파일 없음: {file}")
         continue
 
-    original_titles = df.get('제목(원어)').tolist()
-
-    # 1. 곡명 통합 (원어 위 / 한국어 아래)
-    def merge_cover_and_title(row):
-        title_jp = str(row.get('제목(원어)', '')).strip()
-        title_kr = str(row.get('제목(한국어)', '')).strip()
-        text_html = f'<div class="song-text"><span class="song-title-main">{title_jp}</span>'
-        if title_kr and title_kr != "nan":
-            text_html += f'<span class="song-title-sub">{title_kr}</span>'
-        text_html += '</div>'
-        cover_url = row.get('앨범커버')
-        if pd.notna(cover_url) and isinstance(cover_url, str) and cover_url.strip() != "":
-            img_html = f'<a href="{cover_url}" target="_blank"><img src="{cover_url}" class="album-thumb" alt="cover"></a>'
-        else:
-            img_html = '<div class="album-thumb" style="background:#f0f0f0;"></div>'
-        return f'<div class="song-info-wrapper">{img_html}{text_html}</div>'
-
-    df["곡명"] = df.apply(merge_cover_and_title, axis=1)
-
-    # 2. 상세정보 통합 (타이업도 원곡가수 표시)
+    # 1. 상세정보 통합 (타이업도 원곡가수 표시)
     def merge_meta_info(row):
         release_date = str(row.get('발매일 / 커버일', '-')).strip()
         song_type = str(row.get('곡유형', '')).strip()
@@ -285,7 +296,7 @@ for index, (file, info) in enumerate(csv_files.items()):
             badge_html = '<span class="badge badge-original">ORIGINAL</span>'
         elif "타이업" in song_type:
             badge_html = '<span class="badge badge-tieup">TIE-UP</span>'
-            if orig_artist and orig_artist != "nan": # 타이업 시에도 원곡가수 있으면 표시
+            if orig_artist and orig_artist != "nan":
                 desc_text = f"Original by {orig_artist}"
         elif "커버" in song_type:
             badge_html = '<span class="badge badge-cover">COVER</span>'
@@ -299,33 +310,7 @@ for index, (file, info) in enumerate(csv_files.items()):
 
     df["상세정보"] = df.apply(merge_meta_info, axis=1)
 
-    # 3. 가사 처리
-    lyrics_column = []
-    for idx, title_raw in enumerate(original_titles):
-        t_str = str(title_raw).strip()
-        title_counts[t_str] = title_counts.get(t_str, 0) + 1
-        suffix = f"_{title_counts[t_str]}" if title_counts[t_str] > 1 else ""
-        filename = f"{t_str}{suffix}.txt"
-        filepath = os.path.join(LYRICS_FOLDER, filename)
-        unique_id = f"{index}_{idx}"
-        ext_link = df.iloc[idx].get('번역가사 링크')
-        btn_html = ""
-        if os.path.exists(filepath):
-            with open(filepath, "r", encoding="utf-8") as f:
-                content = f.read().replace('\\r', '').replace('\\n', '<br>').replace('\r\n', '<br>').replace('\n', '<br>')
-            if pd.notna(ext_link) and str(ext_link).strip().startswith("http"):
-                source_btn_html = f'<div class="source-container"><a href="{ext_link}" target="_blank" class="source-link-btn">출처</a></div>'
-                content += source_btn_html
-            safe_title = html.escape(t_str)
-            btn_html = f'<button class="btn btn-lyrics" onclick="showLyrics(\'{unique_id}\', \'{safe_title}\')">Lyrics</button>'
-            btn_html += f'<script id="lyrics-{unique_id}" type="text/template">{content}</script>'
-        else:
-            btn_html = '<span class="btn btn-disabled">No Text</span>'
-        lyrics_column.append(btn_html)
-
-    df["가사"] = lyrics_column
-
-    # 4. 링크 처리
+    # 2. 링크 처리
     def create_link_btn(url):
         if pd.isna(url) or not str(url).strip().startswith("http"): return ""
         return f'<a href="{url}" target="_blank" class="btn btn-link">Listen</a>'
@@ -333,8 +318,67 @@ for index, (file, info) in enumerate(csv_files.items()):
     if "링크" in df.columns:
         df["링크"] = df["링크"].apply(create_link_btn)
 
-    final_df = df[["곡명", "상세정보", "링크", "가사"]]
+    # 3. 곡명 + 가사 통합 처리 (핵심 변경 부분)
+    # 기존 apply 대신 iterrows로 직접 HTML을 생성합니다.
+    song_column_data = []
+    
+    for idx, row in df.iterrows():
+        # 기본 정보 추출
+        title_jp = str(row.get('제목(원어)', '')).strip()
+        title_kr = str(row.get('제목(한국어)', '')).strip()
+        cover_url = row.get('앨범커버')
+        ext_link = row.get('번역가사 링크')
+
+        # 가사 파일 확인 로직
+        title_counts[title_jp] = title_counts.get(title_jp, 0) + 1
+        suffix = f"_{title_counts[title_jp]}" if title_counts[title_jp] > 1 else ""
+        filename = f"{title_jp}{suffix}.txt"
+        filepath = os.path.join(LYRICS_FOLDER, filename)
+        unique_id = f"{index}_{idx}"
+        
+        script_html = ""
+        onclick_attr = ""
+        wrapper_class = "song-info-wrapper"
+        
+        # 가사가 있는 경우
+        if os.path.exists(filepath):
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read().replace('\\r', '').replace('\\n', '<br>').replace('\r\n', '<br>').replace('\n', '<br>')
+            if pd.notna(ext_link) and str(ext_link).strip().startswith("http"):
+                source_btn_html = f'<div class="source-container"><a href="{ext_link}" target="_blank" class="source-link-btn">출처</a></div>'
+                content += source_btn_html
+            
+            safe_title = html.escape(title_jp)
+            # 가사 내용을 담은 숨겨진 script 태그 생성
+            script_html = f'<script id="lyrics-{unique_id}" type="text/template">{content}</script>'
+            # 클릭 이벤트 추가
+            onclick_attr = f'onclick="showLyrics(\'{unique_id}\', \'{safe_title}\')"'
+            wrapper_class += " clickable-song"
+
+        # 곡 정보 HTML 생성 (클릭 이벤트 포함)
+        text_html = f'<div class="song-text"><span class="song-title-main">{title_jp}</span>'
+        if title_kr and title_kr != "nan":
+            text_html += f'<span class="song-title-sub">{title_kr}</span>'
+        text_html += '</div>'
+        
+        if pd.notna(cover_url) and isinstance(cover_url, str) and cover_url.strip() != "":
+            # 앨범 커버 클릭시 새탭 열기 방지를 위해 img 태그만 사용하거나, 
+            # 전체 클릭과 충돌을 막기 위해 event.stopPropagation()을 넣을 수 있으나
+            # 여기서는 전체 클릭이 우선되도록 a태그를 제거하고 이미지만 넣습니다.
+            # (만약 커버 클릭시 확대 기능을 원하시면 별도 처리가 필요합니다)
+            img_html = f'<img src="{cover_url}" class="album-thumb" alt="cover">'
+        else:
+            img_html = '<div class="album-thumb" style="background:#f0f0f0;"></div>'
+            
+        final_cell_html = f'<div class="{wrapper_class}" {onclick_attr}>{img_html}{text_html}</div>{script_html}'
+        song_column_data.append(final_cell_html)
+
+    df["곡명"] = song_column_data
+
+    # 최종 컬럼 선택 (가사 컬럼 제거)
+    final_df = df[["곡명", "상세정보", "링크"]]
     table_html = final_df.to_html(index=False, escape=False, border=0)
+    
     tab_id = f"tab-{index}"
     tabs_html += f'<button class="tab-button" onclick="openTab(event, \'{tab_id}\')">{info["name"]}</button>'
     logo_html = f'<img src="{info.get("logo", "")}" alt="{info["name"]}">' if info.get("logo") else f'<h1>{info["name"]}</h1>'
@@ -345,4 +389,4 @@ final_output = html_template.format(today_date=TODAY_DATE, tab_buttons=tabs_html
 with open(OUTPUT_FILENAME, "w", encoding="utf-8") as f:
     f.write(final_output)
 
-print(f"\n🎉 {OUTPUT_FILENAME} 생성 완료! 모든 요청 사항이 반영되었습니다.")
+print(f"\n🎉 {OUTPUT_FILENAME} 생성 완료! (모바일 최적화: 곡명 클릭 시 가사 팝업)")

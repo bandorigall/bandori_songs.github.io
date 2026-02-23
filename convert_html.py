@@ -64,6 +64,11 @@ csv_files = {
         "color": "#FF69B4",
         "logo": "yumemita.webp"
     },
+    "others.csv": {
+        "name": "기타",
+        "color": "#FF69B4",
+        "logo": "bang_dream.png"
+    },
 }
 
 # ---------------------------------------------------------

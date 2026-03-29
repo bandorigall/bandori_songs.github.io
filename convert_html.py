@@ -64,6 +64,16 @@ csv_files = {
         "color": "#FF69B4",
         "logo": "yumemita.webp"
     },
+    "millsage.csv": {
+        "name": "millsage",
+        "color": "#AA22EE",
+        "logo": "millsage.webp"
+    },
+    "ikkadumbrock.csv": {
+        "name": "一家Dumb Rock",
+        "color": "#FFAA33",
+        "logo": "ikkadumbrock.webp"
+    },
     "others.csv": {
         "name": "기타",
         "color": "#FF69B4",

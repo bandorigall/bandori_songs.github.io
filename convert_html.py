@@ -79,6 +79,11 @@ csv_files = {
         "color": "#FF69B4",
         "logo": "bang_dream.png"
     },
+    "toge.csv": {
+        "name": "トゲナシトゲアリ",
+        "color": "#E8007D",
+        "logo": "toge.webp"
+    },
 }
 
 # ---------------------------------------------------------
@@ -325,8 +330,8 @@ html_template = """
 </head>
 <body>
 
-<a href="https://gall.dcinside.com/mgallery/board/view/?id=bang_dream&no=5985966" target="_blank" class="fixed-guide-btn">
-    초심자용<br>뱅드림 뷰잉<br>10밴드 핵심콜
+<a href="https://gall.dcinside.com/mgallery/board/view/?id=gbcry11&no=313724" target="_blank" class="fixed-guide-btn">
+    토게토게<br>내한 대비<br>콜&호응 가이드<br>애니메이션곡
 </a>
 
 <div class="container">
@@ -461,7 +466,7 @@ for index, (file, info) in enumerate(csv_files.items()):
     for idx, row in df.iterrows():
         title_jp = str(row.get('제목(원어)', '')).strip()
         title_kr = str(row.get('제목(한국어)', '')).strip()
-        cover_url = row.get('앨범커버')
+        cover_url = str(row.get('앨범커버', '')).strip()
         ext_link = row.get('번역가사 링크')
 
         title_counts[title_jp] = title_counts.get(title_jp, 0) + 1

@@ -1,0 +1,120 @@
+================================================================
+Morfonica 발매곡 목록 관리 워크플로우
+================================================================
+
+[ 기본 파일 구조 ]
+발매곡목록/
+  morfonica.csv                ← 곡 메타데이터 (링크, 번역가사 링크 등)
+  morfonica_lyrics_cache.txt   ← 가사 크롤링 캐시 (원어/발음/한국어 통합)
+  lyrics/
+    제목(원어).txt              ← 각 곡 가사 파일
+  lyrics_collector.py          ← 나무위키 크롤러
+  cache_to_files.py            ← 캐시 → txt 저장 + CSV 링크 업데이트
+  update_links.py              ← 재생목록 기준 링크 교체
+  convert_html.py              ← CSV → index.html 변환
+
+================================================================
+처음 셋업 (밴드 처음 추가할 때)
+================================================================
+
+1. morfonica.csv 컬럼 규칙
+   - TJ번호, 제목(원어), 제목(한국어), 발매일 / 커버일, 앨범커버,
+     원곡가수, 곡유형, 링크, 번역가사 링크
+   - 주의: "발매일 / 커버일" 슬래시 양쪽에 공백 있어야 convert_html.py가 인식함
+
+2. 링크 컬럼 = 공식 유튜브 재생목록 URL만 사용
+   - 재생목록: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vIj_3GNgmIwf0teEEdCe6K
+   - yt-dlp로 목록 추출:
+     yt-dlp --flat-playlist --print "%(title)s|%(url)s" [재생목록URL]
+   - 추출 결과로 update_links.py 의 PLAYLIST_MAP 딕셔너리 업데이트 후 실행:
+     python update_links.py
+
+================================================================
+가사 수집 (lyrics_collector.py)
+================================================================
+
+설치:
+  pip install undetected-chromedriver beautifulsoup4
+
+실행:
+  python lyrics_collector.py
+
+동작:
+  - 나무위키 각 곡 페이지에서 가사 td 자동 탐지 (br 개수 + 일/한 혼재)
+  - innerHTML 파싱 → br 1개=그룹 구분, br 2개+=섹션 구분(절/후렴)
+  - morfonica_lyrics_cache.txt 에 아래 형식으로 저장:
+      제목: 곡명
+      URL: https://namu.wiki/w/...
+      가사:
+      (원어)
+      (발음)
+      (한국어)
+      <<<END>>>
+  - 이미 캐시에 있는 곡은 스킵
+  - morfonica.csv 번역가사 링크 컬럼 자동 업데이트
+
+나무위키에 번역 없는 경우:
+  - 직접 가사 붙여넣어서 lyrics/제목(원어).txt 수동 생성
+  - morfonica.csv 번역가사 링크 컬럼에 출처 URL 수동 입력
+  예시 발생 곡:
+    - 胡蝶翔る星月夜: 번역 없음 → Claude가 발음+번역 생성
+    - ビューティ・フォー: 나무위키보다 디시 번역이 더 나음 → 수동 교체
+    - Tempest: 나무위키 URL이 /Tempest(BanG Dream!) 형태라 크롤러 미탐지 → 수동
+
+================================================================
+캐시 → 파일 변환 (cache_to_files.py)
+================================================================
+
+실행:
+  python cache_to_files.py
+
+동작:
+  - morfonica_lyrics_cache.txt 파싱
+  - lyrics/제목(원어).txt 생성
+  - morfonica.csv 번역가사 링크 업데이트
+
+================================================================
+HTML 생성 (convert_html.py)
+================================================================
+
+  [] convert_html.bat 실행
+  또는: python convert_html.py
+
+  → index.html 생성
+
+================================================================
+새 곡 추가 시 체크리스트
+================================================================
+
+□ morfonica.csv 에 행 추가 (발매일 / 커버일 컬럼명 공백 주의)
+□ 재생목록에 영상 추가됐으면 update_links.py 의 PLAYLIST_MAP 갱신 후 실행
+□ lyrics_collector.py 실행 → 나무위키에서 가사 자동 수집
+  - 가사 없으면 수동으로 lyrics/제목(원어).txt 생성
+  - 번역가사 링크 수동 입력
+□ cache_to_files.py 실행 → txt 파일 + CSV 링크 동기화
+□ convert_html.bat 실행 → HTML 재생성
+
+================================================================
+트러블슈팅
+================================================================
+
+증상: 발매일이 HTML에 "-"로 나옴
+원인: CSV 헤더가 "발매일/커버일" (공백 없음)
+해결: 헤더를 "발매일 / 커버일" 로 수정
+
+증상: lyrics_collector.py 에서 "Invalid regular expression" 에러
+원인: JS 정규식에 유니코드 문자 직접 사용 → WebDriver 전송 시 깨짐
+해결: JS regex 를 \uXXXX escape 로 작성 (현재 EXTRACT_JS는 수정 완료)
+
+증상: ChromeDriver 버전 불일치 에러
+원인: undetected_chromedriver 가 최신 버전 드라이버 다운로드
+해결: uc.Chrome(options=options, version_main=148) 처럼 현재 크롬 버전 명시
+
+증상: 나무위키 403 에러 (WebFetch 사용 시)
+원인: 나무위키가 Cloudflare로 봇 차단
+해결: lyrics_collector.py (undetected_chromedriver) 사용, WebFetch 사용 금지
+
+증상: 가사가 있는데 크롤러가 못 찾음
+원인1: 나무위키 페이지에 한국어 번역이 아직 없음 → 수동 처리
+원인2: 가사가 2컬럼 테이블이 아니라 단일 td + br 구조
+       → EXTRACT_JS가 br 10개 이상 + 일/한 혼재 td를 탐지하도록 설계됨

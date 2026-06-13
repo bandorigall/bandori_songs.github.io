@@ -392,10 +392,6 @@ html_template = """
 </head>
 <body>
 
-<a href="https://gall.dcinside.com/mgallery/board/view/?id=gbcry11&no=313724" target="_blank" class="fixed-guide-btn">
-    토게토게<br>내한 대비<br>콜&호응 가이드<br>애니메이션곡
-</a>
-
 <div class="container">
     <div class="nav-header">
         <div class="last-update">Last Update: {today_date}</div>

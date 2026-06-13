@@ -127,15 +127,24 @@ def main() -> None:
         try:
             for row in needs_fetch:
                 title = row.get("제목(원어)", "").strip()
-                url = NAMU_BASE + urllib.parse.quote(title)
+                # 원제목으로 먼저 시도하고, 가사를 못 찾으면
+                # "(BanG Dream!)" 동음이의 문서명을 붙여 재시도
+                candidates = [title, f"{title}(BanG Dream!)"]
                 print(f"[GET ] {title}")
-                print(f"       {url}")
                 try:
-                    driver.get(url)
-                    time.sleep(3)
-                    lyrics = driver.execute_script(EXTRACT_JS)
-                    if not lyrics:
-                        lyrics = _bs4_fallback(driver.page_source)
+                    lyrics = None
+                    url = ""
+                    for cand in candidates:
+                        url = NAMU_BASE + urllib.parse.quote(cand)
+                        print(f"       {url}")
+                        driver.get(url)
+                        time.sleep(3)
+                        lyrics = driver.execute_script(EXTRACT_JS)
+                        if not lyrics:
+                            lyrics = _bs4_fallback(driver.page_source)
+                        if lyrics:
+                            break
+                        print(f"       ↳ 미탐지, 다음 후보 시도")
                     if lyrics:
                         lyrics = lyrics.strip()
                         append_cache(title, url, lyrics)

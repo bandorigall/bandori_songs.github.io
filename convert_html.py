@@ -102,6 +102,61 @@ def normalize_and_simplify(text):
     return clean_text.lower().strip()
 
 # ---------------------------------------------------------
+# 가사 → 색상 분리 HTML  (ly-ja 원어 / ly-rom 발음 / ly-ko 번역)
+#   - 한글 포함 여부로 원어줄/한글줄 구분 (발음·번역은 둘 다 한글)
+#   - "원어 → 한글들" 을 한 그룹으로 묶어 그룹 단위로 색 배정:
+#       원어1 + 한글2  → 원어/발음/번역  (표준 3줄)
+#       원어1 + 한글1  → 원어/번역       (발음 없는 곡)
+#       원어N + 한글N  → 원어들/번역들    (발음 없는 그룹형)
+#   - 위치(i%3)에 의존하지 않아 포맷이 달라도 안 깨짐
+# ---------------------------------------------------------
+def _has_hangul(s):
+    return any('가' <= c <= '힣' for c in s)
+
+def format_lyrics(raw):
+    blocks_html = []
+    for block in re.split(r'\n{2,}', raw.strip()):
+        lines = [ln for ln in block.split('\n') if ln.strip()]
+        if not lines:
+            continue
+
+        # 한 그룹 = 원어줄(들) + 뒤따르는 한글줄(들)
+        groups, cur = [], None
+        for ln in lines:
+            if _has_hangul(ln):                      # 한글줄 (발음 또는 번역)
+                if cur is None:
+                    cur = {"ja": [], "kr": []}
+                cur["kr"].append(ln)
+            else:                                    # 원어줄 (일본어/영어 등)
+                if cur and cur["kr"]:                # 한글 뒤 원어 → 새 그룹
+                    groups.append(cur); cur = None
+                if cur is None:
+                    cur = {"ja": [], "kr": []}
+                cur["ja"].append(ln)
+        if cur:
+            groups.append(cur)
+
+        parts = []  # (class, text)
+        for g in groups:
+            for j in g["ja"]:
+                parts.append(("ly-ja", j))
+            no, nk = len(g["ja"]), len(g["kr"])
+            if no == 1 and nk == 2:
+                parts.append(("ly-rom", g["kr"][0]))
+                parts.append(("ly-ko",  g["kr"][1]))
+            elif no == 1 and nk >= 3:
+                parts.append(("ly-rom", g["kr"][0]))
+                parts += [("ly-ko", x) for x in g["kr"][1:]]
+            else:                                    # 한글 1줄, 또는 그룹형(발음 없음)
+                parts += [("ly-ko", x) for x in g["kr"]]
+
+        line_html = "".join(
+            f'<p class="{c}">{html.escape(t)}</p>' for c, t in parts
+        )
+        blocks_html.append(f'<div class="lyrics-block">{line_html}</div>')
+    return "".join(blocks_html)
+
+# ---------------------------------------------------------
 # HTML 템플릿
 # ---------------------------------------------------------
 html_template = """
@@ -282,11 +337,18 @@ html_template = """
             display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }}
         .modal-header {{ padding: 20px 25px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }}
-        .modal-body {{ 
-            padding: 30px; 
+        .modal-body {{
+            padding: 30px;
             overflow-y: auto;
-            line-height: 1.8; white-space: pre-wrap; font-size: 16px; text-align: center; color: #444; 
+            line-height: 1.7; font-size: 16px; text-align: center; color: #444;
         }}
+        /* 가사 3색 분리 (원어/발음/번역) */
+        .lyrics-block {{ margin-bottom: 18px; }}
+        .lyrics-block:last-child {{ margin-bottom: 0; }}
+        .lyrics-block p {{ margin: 2px 0; }}
+        .ly-ja  {{ font-size: 15px; color: #2d3436; font-weight: 600; }}
+        .ly-rom {{ font-size: 13px; color: #adb5bd; }}
+        .ly-ko  {{ font-size: 14px; color: #e64980; font-weight: 500; }}
         .close-btn {{ font-size: 28px; cursor: pointer; border: none; background: none; color: #ccc; }}
         
         /* 우측 하단 고정 버튼 */
@@ -484,8 +546,8 @@ for index, (file, info) in enumerate(csv_files.items()):
             
             try:
                 with open(filepath, "r", encoding="utf-8") as f:
-                    content = f.read().replace('\\r', '').replace('\\n', '<br>').replace('\r\n', '<br>').replace('\n', '<br>')
-                    
+                    content = format_lyrics(f.read())
+
                 if pd.notna(ext_link) and str(ext_link).strip().startswith("http"):
                     source_btn_html = f'<div class="source-container"><a href="{ext_link}" target="_blank" class="source-link-btn">출처</a></div>'
                     content += source_btn_html

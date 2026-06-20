@@ -22,13 +22,13 @@
 (Wow wo wow)시라베와 이노치
 (Wow wo wow)선율은 생명
 
-新たな境地へ (Show me)
-아라타나 쿄-치에 (Show me)
-새로운 경지로 (Show me)
+新たな境地へ (Show me)
+아라타나 쿄-치에 (Show me)
+새로운 경지로 (Show me)
 
-咲き誇る答え (Show me)
-사키호코루 코타에 (Show me)
-피어오르는 대답 (Show me)
+咲き誇る答え (Show me)
+사키호코루 코타에 (Show me)
+피어오르는 대답 (Show me)
 
 奏でましょう
 카나데마쇼-
@@ -38,9 +38,9 @@
 아-…타카부루 네츠가 미오 코가시테
 아아…끓어넘치는 열기가 몸을 태우고
 
-We'll not give in 挑むは世界へ
-We'll not give in 이도무와 세카이에
-We'll not give in 세상에 도전해
+We'll not give in 挑むは世界へ
+We'll not give in 이도무와 세카이에
+We'll not give in 세상에 도전해
 
 足りないものなど　何一つない
 타리나이 모노나도 나니 히토츠 나이
@@ -56,8 +56,7 @@ We'll not give in 세상에 도전해
 
 歌声新たに Fly free now
 우타고에 아라타니 Fly free now
-노랫소리는 새롭게 Fly free now
-暗闇で磨き続けた音は
+노랫소리는 새롭게 Fly free now 暗闇で磨き続けた音は
 쿠라야미데 미가키 츠즈케타 오토와
 어둠 속에서 계속 연마했던 소리는
 
@@ -73,13 +72,13 @@ We'll not give in 세상에 도전해
 코코데 오노레토 나리 우부고에오 아게타
 여기서 나 자신이 되어 탄생을 고했어
 
-見失えば　また (We are)
-미우시나에바 마타 (We are)
-잃어버린다면 다시 (We are)
+見失えば　また (We are)
+미우시나에바 마타 (We are)
+잃어버린다면 다시 (We are)
 
-見つけ出すまでよ (We are)
-미츠케다스마데요 (We are)
-찾아내면 될 일이야 (We are)
+見つけ出すまでよ (We are)
+미츠케다스마데요 (We are)
+찾아내면 될 일이야 (We are)
 
 すべてを賭し
 스베테오 토시
@@ -89,9 +88,9 @@ We'll not give in 세상에 도전해
 모에히로가루 코에 미라이오 다키
 타오르며 번지는 목소리가 미래를 품고
 
-We stand with grace 期待を超えゆけ
-We stand with grace 키타이오 코에유케
-We stand with grace 기대를 넘어거라
+We stand with grace 期待を超えゆけ
+We stand with grace 키타이오 코에유케
+We stand with grace 기대를 넘어거라
 
 疑うものなど　何一つない
 우타가우 모노나도 나니 히토츠 나이
@@ -107,14 +106,13 @@ We stand with grace 기대를 넘어거라
 
 私達は一切 Never lie
 와타시타치와 잇사이 Never lie
-우리들은 일절 Never lie
-嗚呼...昂る熱が身を焦がして
+우리들은 일절 Never lie 嗚呼...昂る熱が身を焦がして
 아-…타카부루 네츠가 미오 코가시테
 아아…끓어넘치는 열기가 몸을 태우고
 
-We'll not give in 挑むは世界へ
-We'll not give in 이도무와 세카이에
-We'll not give in 세상에 도전해
+We'll not give in 挑むは世界へ
+We'll not give in 이도무와 세카이에
+We'll not give in 세상에 도전해
 
 足りないものなど　何一つない
 타리나이 모노나도 나니 히토츠 나이
@@ -131,3 +129,5 @@ We'll not give in 세상에 도전해
 歌声新たに Fly free now
 우타고에 아라타니 Fly free now
 노랫소리는 새롭게 Fly free now
+
+번역: Cybz (소라)

@@ -13,6 +13,11 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
 1. 제목(원어) + 유튜브 링크 채우기
    - 공식 디스코그래피와 공식 유튜브 플레이리스트를 교차검증
    - 둘이 일치하는 기준으로 제목(원어)과 링크 컬럼을 먼저 확정
+   - 플레이리스트 곡 추출(곡명 한글/일본어 깨짐 방지 위해 PYTHONUTF8=1 필수):
+       PYTHONUTF8=1 yt-dlp --flat-playlist --print "%(id)s\t%(title)s" [재생목록URL]
+   - 교차검증은 "영상 ID" 기준으로. 기존 CSV의 링크에서 ID만 뽑아
+     플레이리스트 ID 집합과 대조 → 양쪽 차집합이 곡 누락/오타를 잡아줌
+     (이번 PasPare 작업에서 02-G0MAcdmc 한 곡 누락을 이 대조로 발견)
 
 2. 제목(한국어) 채우기
    - Bestdori(한도리)에서 한글 제목을 찾아 채움
@@ -21,7 +26,11 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
    - (영어 전용 제목은 "제목(한국어) 표기 규칙"에 따라 비움)
 
 3. 앨범커버 채우기
-   - 뱅드림 공식 사이트에서 먼저 찾음
+   - 뱅드림 공식 사이트에서만 가져옴 (googleusercontent 등 비공식 금지)
+   - 자세한 절차는 아래 "앨범커버 수집 (공식 사이트)" 섹션 참고
+   - 발매일도 공식 디스코그래피 페이지의 "発売日"을 기준으로 함
+     (팬위키 날짜나 유튜브 업로드일 X — 업로드일은 발매 하루 전 선공개인 경우 있음)
+   - 채운 뒤 발매일 오름차순 정렬 (다른 밴드 CSV와 동일 규칙)
 
 4. 가사 채우기
    - 아래 "가사 수집" / "가사 오류 교정" 섹션 절차대로 진행
@@ -77,14 +86,47 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
     w.writerows(rows)
 
 ================================================================
+앨범커버 수집 (공식 사이트)
+================================================================
+
+원칙: 커버는 반드시 bang-dream.com(또는 en.bang-dream.com) 공식 자켓만.
+      기존에 googleusercontent URL 로 돼있으면 전부 공식으로 교체.
+
+곡 → 릴리스 매핑:
+  - 같은 싱글/앨범에 실린 곡(A면+커플링)은 같은 자켓을 공유.
+    → 한 릴리스당 자켓 1번만 구하고 그 릴리스의 모든 곡에 재사용.
+  - 앨범 신곡(싱글 미발매)은 그 앨범 자켓.
+  - 디지털 싱글은 공식 디스코그래피 단독 페이지가 없을 수 있음
+    → 수록된 앨범의 공식 자켓으로 대체 (예: PasPare るんっ♪てぃてぃー！)
+
+자켓 URL 얻는 법:
+  1) 릴리스의 공식 디스코그래피 페이지 ID 찾기
+     - 구글에 "[릴리스/곡명] bang-dream discographies" 검색
+       → https://bang-dream.com/discographies/{ID} 형태 URL 확보
+     - 인덱스(/discographies?artist=...)는 JS 렌더라 curl 로 ID 안 나옴. 검색이 빠름.
+  2) 그 페이지에서 og:image = 공식 자켓 URL:
+       curl -sL -A "Mozilla/5.0 ... Chrome/120.0 Safari/537.36" \
+         "https://bang-dream.com/discographies/{ID}" \
+       | grep -oE 'og:image" content="[^"]+"'
+  3) 구버전 릴리스 일부는 영문 음악 페이지에 자켓이 모여있음:
+       https://en.bang-dream.com/music/cat_music/{밴드}/   (예: pastelpalettes)
+     단 최신 릴리스는 영문 사이트 반영이 늦으니 JP og:image 우선.
+
+검증: 채운 자켓 URL 들이 살아있는지 HTTP 200 확인.
+  - curl 로 이미지 연타하면 레이트리밋으로 000(연결실패) 뜰 수 있음
+    → 요청 사이 sleep 1~2초, --max-time 25 주고 확인.
+
+================================================================
 가사 수집 (lyrics_collector.py)
 ================================================================
 
 설치:
   pip install undetected-chromedriver beautifulsoup4
 
-실행:
-  python lyrics_collector.py
+실행 (★밴드명 인자 필수★ — 빼면 기본값 morfonica 로 돌아 엉뚱한 밴드 오염):
+  python lyrics_collector.py {밴드}
+  예: python lyrics_collector.py pastel_palettes
+  - 크롬 버전 안 맞으면 2번째 인자로 메이저 버전: ... pastel_palettes 149
 
 동작:
   - 나무위키 각 곡 페이지에서 가사 td 자동 탐지 (br 개수 + 일/한 혼재)
@@ -99,6 +141,11 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
       <<<END>>>
   - 이미 캐시에 있는 곡은 스킵
   - {밴드}.csv 번역가사 링크 컬럼 자동 업데이트
+
+나무위키 페이지를 크롤러가 못 찾을 때 (URL 부터 막힐 때):
+  - 구글에 "{곡제목} 나무위키" 로 검색하면 보통 상단에 해당 곡
+    나무위키 문서가 바로 뜬다. 그 URL 을 쓰면 됨.
+    (이번 PasPare 의 天下トーイツA to Z☆/きゅ〜まい＊flower/Y.O.L.O 도 이렇게 찾음)
 
 나무위키에 번역 없는 경우:
   - 직접 가사 붙여넣어서 lyrics/제목(원어).txt 수동 생성
@@ -138,8 +185,9 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
 캐시 → 파일 변환 (cache_to_files.py)
 ================================================================
 
-실행:
-  python cache_to_files.py
+실행 (★밴드명 인자 필수★, Windows 콘솔은 PYTHONUTF8=1 같이):
+  PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python cache_to_files.py {밴드}
+  예: PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python cache_to_files.py pastel_palettes
 
 동작:
   - {밴드}_lyrics_cache.txt 파싱
@@ -161,12 +209,15 @@ HTML 렌더 (JS 포팅 완료 — 생성 단계 없음)
 ================================================================
 
 □ {밴드}.csv 에 행 추가 (발매일 / 커버일 컬럼명 공백 주의)
+□ 제목(원어)+링크: yt-dlp(PYTHONUTF8=1)로 플레이리스트 ID 추출, ID로 교차검증
 □ 제목(원어)가 영어 전용이면 제목(한국어) 비우기
+□ 발매일: 공식 디스코그래피 "発売日" 기준, 채운 뒤 발매일 오름차순 정렬
+□ 앨범커버: 공식(bang-dream.com) og:image 만. googleusercontent 있으면 교체
 □ 재생목록에 영상 추가됐으면 update_links.py 의 PLAYLIST_MAP 갱신 후 실행
-□ lyrics_collector.py 실행 → 나무위키에서 가사 자동 수집
-  - 가사 없으면 수동으로 lyrics/제목(원어).txt 생성
-  - 번역가사 링크 수동 입력
-□ cache_to_files.py 실행 → txt 파일 + CSV 링크 동기화
+□ python lyrics_collector.py {밴드}   ← ★밴드명 인자 필수★ (빼면 morfonica)
+  - 가사 없으면 수동으로 lyrics/제목(원어).txt 생성 + 번역가사 링크 입력
+    (트러블슈팅 "일부 곡만 실패" 절차 참고)
+□ PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python cache_to_files.py {밴드}
   (HTML 재생성 불필요 — index.html 이 CSV/lyrics 를 직접 읽음)
 
 ================================================================
@@ -198,3 +249,21 @@ HTML 렌더 (JS 포팅 완료 — 생성 단계 없음)
 증상: 가사 파일에 다른 곡 가사가 들어가 있음
 원인: 동명이곡/크롤링 오매칭
 해결: "가사 오류 교정" 섹션 절차대로 올바른 나무위키 페이지에서 재수집
+
+증상: cache_to_files.py / 파이썬 스크립트가 UnicodeEncodeError(cp949) 로 죽음
+      (예: 'ー' 〜·ー 등 출력 중 illegal multibyte sequence)
+원인: Windows 콘솔 기본 인코딩이 cp949 라 일본어 파일명 print 시 터짐
+      (파일 쓰기는 utf-8 이라 정상, 죽는 건 화면 출력 단계 — 중간에 멈춰버림)
+해결: 실행 앞에 PYTHONUTF8=1 PYTHONIOENCODING=utf-8 붙여서 재실행
+
+증상: lyrics_collector.py 가 일부 곡만 "가사 없음/실패" 로 빠짐
+      (이번 PasPare: 天下トーイツA to Z☆, きゅ〜まい＊flower, Y.O.L.O！！！！！)
+원인: 나무위키 문서명이 자동 후보(원제목/NFKC/접미사)로 안 잡히거나
+      가사 테이블 구조가 달라 EXTRACT_JS 미탐지
+해결(수동 1곡씩):
+  1) 올바른 나무위키 URL 확보 — 모르면 구글에 "{곡제목} 나무위키" 검색
+  2) curl + 브라우저 UA 로 페이지 받기(403 우회)
+  3) bs4 로 br 많고 일/한 혼재인 td 추출 → 일/발음/한 3줄 블록 생성
+     (lyrics_collector.py 의 _bs4_fallback 와 동일 로직)
+  4) {밴드}_lyrics_cache.txt 에 "제목:/URL:/가사:/...<<<END>>>" 형식으로 append
+  5) cache_to_files.py 재실행 → txt + CSV 링크 동기화

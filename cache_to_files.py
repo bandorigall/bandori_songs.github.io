@@ -7,12 +7,16 @@ morfonica_lyrics_cache.txt 를 파싱해서
 """
 
 import csv
+import sys
 from pathlib import Path
 
+# 밴드명을 인자로 받음 (없으면 morfonica). 예: python cache_to_files.py afterglow
+BAND = sys.argv[1] if len(sys.argv) > 1 else "morfonica"
+
 BASE_DIR   = Path(__file__).parent
-CACHE_PATH = BASE_DIR / "morfonica_lyrics_cache.txt"
+CACHE_PATH = BASE_DIR / f"{BAND}_lyrics_cache.txt"
 LYRICS_DIR = BASE_DIR / "lyrics"
-CSV_PATH   = BASE_DIR / "morfonica.csv"
+CSV_PATH   = BASE_DIR / f"{BAND}.csv"
 
 
 def load_cache() -> dict[str, dict]:

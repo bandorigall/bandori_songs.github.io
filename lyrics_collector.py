@@ -12,28 +12,42 @@ Morfonica 나무위키 가사 수집기 (ChromeDriver 버전)
 
 import csv
 import re
+import sys
 import time
+import unicodedata
 import urllib.parse
 from pathlib import Path
 
 import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
 
+# 밴드명을 인자로 받음 (없으면 morfonica). 예: python lyrics_collector.py afterglow
+BAND = sys.argv[1] if len(sys.argv) > 1 else "morfonica"
+# 설치된 크롬 메이저 버전 (드라이버 호환). 크롬 업데이트 시 여기만 수정
+CHROME_VERSION = int(sys.argv[2]) if len(sys.argv) > 2 else 149
+
 BASE_DIR   = Path(__file__).parent
-CACHE_PATH = BASE_DIR / "morfonica_lyrics_cache.txt"
-CSV_PATH   = BASE_DIR / "morfonica.csv"
+CACHE_PATH = BASE_DIR / f"{BAND}_lyrics_cache.txt"
+CSV_PATH   = BASE_DIR / f"{BAND}.csv"
 NAMU_BASE  = "https://namu.wiki/w/"
+
+# CSV 제목과 나무위키 실제 문서명이 다른 예외 (대소문자 등 자동 규칙으로 못 잡는 것)
+# 예: CSV "True Color" 인데 나무위키 문서는 "True color"
+NAMU_OVERRIDES = {
+    "True Color": "True color",
+}
 
 # \u escape 를 JS가 해석하도록 raw string + 실제 유니코드 문자 배제
 EXTRACT_JS = (
     "(function() {"
     "  function isJapanese(t) { return /[\\u3041-\\u30FE\\u4E00-\\u9FFF]/.test(t); }"
     "  function hasKorean(t)  { return /[\\uAC00-\\uD7A3]/.test(t); }"
+    "  function hasLatin(t)   { return /[A-Za-z]/.test(t); }"
     "  var best = null, bestBr = 0;"
     "  document.querySelectorAll('td').forEach(function(td) {"
     "    var n = td.querySelectorAll('br').length;"
     "    var t = td.innerText;"
-    "    if (n > 10 && isJapanese(t) && hasKorean(t) && n > bestBr) {"
+    "    if (n > 10 && hasKorean(t) && (isJapanese(t) || hasLatin(t)) && n > bestBr) {"
     "      bestBr = n; best = td;"
     "    }"
     "  });"
@@ -121,15 +135,24 @@ def main() -> None:
         options = uc.ChromeOptions()
         options.add_argument("--lang=ko-KR")
         options.add_argument("--window-size=1280,800")
-        driver = uc.Chrome(options=options, version_main=148)
+        driver = uc.Chrome(options=options, version_main=CHROME_VERSION)
         success, fail = [], []
 
         try:
             for row in needs_fetch:
                 title = row.get("제목(원어)", "").strip()
-                # 원제목으로 먼저 시도하고, 가사를 못 찾으면
-                # "(BanG Dream!)" 동음이의 문서명을 붙여 재시도
-                candidates = [title, f"{title}(BanG Dream!)"]
+                # 후보 문서명 생성:
+                #  - 원제목 그대로
+                #  - NFKC 정규화본 (CSV의 전각 기호 ！，… → 반각 !,. : 나무위키 문서명 규칙)
+                #  - 각 변형에 "(BanG Dream!)" 동음이의 접미사 추가
+                norm = unicodedata.normalize("NFKC", title)
+                override = NAMU_OVERRIDES.get(title)
+                seeds = [title, norm] + ([override] if override else [])
+                bases = list(dict.fromkeys(seeds))  # 순서 유지 + 중복 제거
+                candidates = []
+                for base in bases:
+                    candidates.append(base)
+                    candidates.append(f"{base}(BanG Dream!)")
                 print(f"[GET ] {title}")
                 try:
                     lyrics = None
@@ -178,7 +201,7 @@ def _bs4_fallback(html: str) -> str | None:
     for td in soup.find_all("td"):
         br_count = len(td.find_all("br"))
         text = td.get_text()
-        if br_count > 10 and _is_japanese(text) and _is_korean(text) and br_count > best_br:
+        if br_count > 10 and _is_korean(text) and (_is_japanese(text) or _has_latin(text)) and br_count > best_br:
             best_br = br_count
             best_td = td
     if not best_td:
@@ -202,6 +225,10 @@ def _bs4_fallback(html: str) -> str | None:
 
 def _is_japanese(text: str) -> bool:
     return any(0x3041 <= ord(c) <= 0x30FE or 0x4E00 <= ord(c) <= 0x9FFF for c in text)
+
+
+def _has_latin(text: str) -> bool:
+    return any(("a" <= c <= "z") or ("A" <= c <= "Z") for c in text)
 
 
 def _is_korean(text: str) -> bool:

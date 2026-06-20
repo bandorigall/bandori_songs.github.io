@@ -136,6 +136,22 @@
             width: 52px; height: 52px; border-radius: 8px; object-fit: cover;
             margin-right: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0; background-color: #eee;
         }
+        .album-thumb.zoomable { cursor: zoom-in; transition: transform 0.15s; }
+        .album-thumb.zoomable:hover { transform: scale(1.08); }
+        .image-overlay {
+            display: none; position: fixed; inset: 0; z-index: 2000;
+            background: rgba(0,0,0,0.85); justify-content: center; align-items: center;
+            cursor: zoom-out;
+        }
+        .image-overlay.open { display: flex; }
+        .image-overlay img {
+            max-width: 90vw; max-height: 90vh; border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .image-close {
+            position: absolute; top: 20px; right: 30px; color: #fff;
+            font-size: 40px; font-weight: 700; cursor: pointer; line-height: 1;
+        }
         .song-text { display: flex; flex-direction: column; }
         .song-title-main { font-size: 1.05em; font-weight: 700; color: #333; margin-bottom: 2px; }
         .song-title-sub { font-size: 0.8em; color: #999; }
@@ -208,6 +224,10 @@
 
 <div class="footer">made by Bangbung Kim</div>
 
+<div id="image-modal" class="image-overlay" onclick="closeImage()">
+    <span class="image-close">&times;</span>
+    <img id="image-full" src="" alt="">
+</div>
 <div id="lyrics-modal" class="modal-overlay" onclick="closeModal()">
     <div class="modal-box" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -373,6 +393,11 @@ function renderBand(rows) {
         if (hasLyrics) {
             wrap.addEventListener("click", () => showLyrics(titleJp, extLink));
         }
+        if (cover) {
+            const thumb = wrap.querySelector(".album-thumb");
+            thumb.classList.add("zoomable");
+            thumb.addEventListener("click", e => { e.stopPropagation(); showImage(cover, titleJp); });
+        }
 
         const tr = document.createElement("tr");
         const td1 = document.createElement("td"); td1.appendChild(wrap);
@@ -419,7 +444,20 @@ function closeModal() {
     document.getElementById("lyrics-modal").style.display = "none";
     document.body.style.overflow = "auto";
 }
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+function showImage(src, alt) {
+    const modal = document.getElementById("image-modal");
+    const img = document.getElementById("image-full");
+    img.src = src;
+    img.alt = alt || "";
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+function closeImage() {
+    document.getElementById("image-modal").classList.remove("open");
+    document.getElementById("image-full").src = "";
+    document.body.style.overflow = "auto";
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); closeImage(); } });
 
 function openTab(idx) {
     document.querySelectorAll(".content").forEach(c => c.classList.remove("active"));

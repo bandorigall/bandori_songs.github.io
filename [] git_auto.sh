@@ -33,3 +33,35 @@ fi
 
 echo ""
 echo "[OK] 모든 작업이 성공적으로 완료되었습니다!"
+
+# 5. 배포된 GitHub Pages 주소를 기본 브라우저로 열기 (OS별)
+URL="https://bandorigall.github.io/bandori_songs.github.io/"
+echo "[+] Opening $URL ..."
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*)   # Windows (Git Bash / MSYS / Cygwin)
+        powershell.exe -NoProfile -Command "Start-Process '$URL'" \
+            || echo "[i] 브라우저 자동 실행 실패. 수동으로 여세요: $URL"
+        ;;
+    Linux*)                 # Linux
+        xdg-open "$URL" >/dev/null 2>&1 \
+            || echo "[i] 브라우저 자동 실행 실패. 수동으로 여세요: $URL"
+        ;;
+    Darwin*)                # macOS
+        open "$URL" \
+            || echo "[i] 브라우저 자동 실행 실패. 수동으로 여세요: $URL"
+        ;;
+    *)
+        echo "[i] 알 수 없는 OS. 수동으로 여세요: $URL"
+        ;;
+esac
+
+# 6. 작업 완료 후 이 터미널 창 닫기.
+#    스크립트를 source 한 경우(대화형)에는 세션을 죽이지 않도록 건너뜀.
+case "$-" in
+    *i*) : ;;  # sourced / interactive -> 닫지 않음
+    *)
+        echo "[+] Done. Closing window..."
+        ( sleep 1; kill -9 "$PPID" ) >/dev/null 2>&1 &
+        ;;
+esac
+exit 0

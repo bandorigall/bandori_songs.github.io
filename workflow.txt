@@ -37,7 +37,8 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
   lyrics_collector.py        ← 나무위키 크롤러
   cache_to_files.py          ← 캐시 → txt 저장 + CSV 링크 업데이트
   update_links.py            ← 재생목록 기준 링크 교체
-  convert_html.py            ← CSV → index.html 변환
+  index.html                 ← CSV/lyrics 를 브라우저에서 fetch 해 렌더 (JS)
+  legacy/                    ← 옛 정적 HTML 생성 파이프라인 (convert_html.py 등)
   workflow.txt               ← (이 파일)
 
 ================================================================
@@ -146,13 +147,14 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
   - {밴드}.csv 번역가사 링크 업데이트
 
 ================================================================
-HTML 생성 (convert_html.py)
+HTML 렌더 (JS 포팅 완료 — 생성 단계 없음)
 ================================================================
 
-  [] convert_html.bat 실행
-  또는: python convert_html.py
+  index.html 이 브라우저에서 직접 {밴드}.csv 와 lyrics/제목.txt 를
+  fetch 해서 렌더한다. 더 이상 convert_html.py 로 HTML 을 만들 필요 없음.
 
-  → index.html 생성
+  - 곡/가사 추가 후엔 CSV 와 lyrics/ txt 만 갱신하면 그대로 반영됨.
+  - 옛 정적 HTML 생성기(convert_html.py / .bat)는 legacy/ 로 이동.
 
 ================================================================
 새 곡 추가 시 체크리스트
@@ -165,7 +167,7 @@ HTML 생성 (convert_html.py)
   - 가사 없으면 수동으로 lyrics/제목(원어).txt 생성
   - 번역가사 링크 수동 입력
 □ cache_to_files.py 실행 → txt 파일 + CSV 링크 동기화
-□ convert_html.bat 실행 → HTML 재생성
+  (HTML 재생성 불필요 — index.html 이 CSV/lyrics 를 직접 읽음)
 
 ================================================================
 트러블슈팅

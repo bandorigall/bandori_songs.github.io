@@ -1,0 +1,22 @@
+================ 사용법 (요약) ================
+
+[ 구조 ]
+  index.html        ← 브라우저로 열면 끝. CSV/lyrics 직접 읽어 렌더 (JS)
+  {밴드}.csv         ← 곡 메타데이터 (제목/링크/가사링크 등)
+  lyrics/제목.txt    ← 곡별 가사 (일/발음/한 3줄 블록, 블록 사이 빈 줄)
+  *_lyrics_cache.txt ← 가사 크롤링 캐시
+  *.py              ← 데이터 수집 스크립트
+  legacy/           ← 옛 HTML 생성기 (안 씀)
+
+[ 곡/가사 추가 ]
+  1. {밴드}.csv 에 행 추가
+  2. python lyrics_collector.py   (나무위키 가사 수집)
+  3. python cache_to_files.py     (lyrics/ txt + CSV 링크 동기화)
+  → index.html 새로고침하면 바로 반영 (HTML 재생성 불필요)
+
+[ 링크 갱신 ]
+  python update_links.py          (재생목록 기준 링크 교체)
+
+[ 메모 ]
+  - 가사 없는 곡: lyrics/제목.txt 수동 작성
+  - 자세한 절차/트러블슈팅 → workflow.txt

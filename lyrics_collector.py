@@ -35,6 +35,10 @@ NAMU_BASE  = "https://namu.wiki/w/"
 # 예: CSV "True Color" 인데 나무위키 문서는 "True color"
 NAMU_OVERRIDES = {
     "True Color": "True color",
+    # 나무위키 문서명이 전각 ！/〜·ASCII 따옴표·전각 괄호를 써서 자동탐지 실패
+    "STAR BEAT!～ホシノコドウ～": "STAR BEAT！〜ホシノコドウ〜",
+    "ぽっぴん’しゃっふる": "ぽっぴん'しゃっふる",
+    "二重の虹(ダブル レインボウ)": "二重の虹（ダブル レインボウ）",
 }
 
 # \u escape 를 JS가 해석하도록 raw string + 실제 유니코드 문자 배제

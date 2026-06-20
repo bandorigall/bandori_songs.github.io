@@ -6,6 +6,7 @@ NON STOP サーキュレーション 明日は SO GOOD!
 NON STOP 사큐레숀 아시타와 SO GOOD!
 NON STOP Circulation 내일은 SO GOOD!
 
+
 まっすぐ夢みた瞬間 (YOU, YOU, 夢みてた?)
 맛스구 유메미타 슌칸 (YOU, YOU, 유메 미테타?)
 꿈을 맞닥뜨린 순간 (YOU, YOU, 꿈을 꿨어?)
@@ -21,7 +22,8 @@ NON STOP Circulation 내일은 SO GOOD!
 でもね 急に泣きたくなって (泣かないで DON'T CRY)
 데모네 큐우니 나키타쿠 낫테 (나카나이데 DON'T CRY)
 그런데 갑자기 울고 싶어져 (울지마 DON'T CRY)
-心のシグナル을 のぞいてみたら(STOP OR GO?)
+
+心のシグナルをのぞいてみたら(STOP OR GO?)
 코코로노 시구나루오 노조이테 미타라(STOP OR GO?)
 마음의 신호를 들여다보니(STOP OR GO?)
 
@@ -39,7 +41,7 @@ NON STOP Circulation 내일은 SO GOOD!
 
 この指とまれ!
 코노 유비 토마레!
-여기에 붙어라!
+여기에 붙어라![1]
 
 ティアドロップス・レボリューション 涙 ゼンブあつめたら
 티아 도롯푸스 레보류숀 나미다 젠부 아츠메타라
@@ -106,7 +108,7 @@ HEARTBREAK Generation 새로운 너를 만나
 꾸던 꿈이 깨어지는 순간 (TICK, TACK, 지금 WHAT TIME?)
 
 未来が見えない少女 (KNOW, KNOW, 未来は NO WAY)
-미라이가 미에나이 쇼죠 (KNOW, KNOW, 미라이와 NO WAY)
+라이가 미에나이 쇼죠 (KNOW, KNOW, 미라이와 NO WAY)
 미래가 보이지 않는 소녀 (KNOW, KNOW, 미래는 NO WAY)
 
 (この手を離さない)

@@ -50,8 +50,12 @@ def main() -> None:
     print(f"캐시에서 {len(cache)}곡 로드")
 
     # 1. lyrics/*.txt 저장
+    #    Windows 금지문자(\ / : * ? " < > |) 제거 — convert_html은 제목 정규화로
+    #    매칭하므로 파일명에서 이 문자들을 빼도 매칭에 영향 없음
+    import re as _re
     for title, data in cache.items():
-        txt_path = LYRICS_DIR / f"{title}.txt"
+        safe = _re.sub(r'[\\/:*?"<>|]', '', title).strip()
+        txt_path = LYRICS_DIR / f"{safe}.txt"
         txt_path.write_text(data["lyrics"], encoding="utf-8")
         print(f"  저장: {txt_path.name}")
 

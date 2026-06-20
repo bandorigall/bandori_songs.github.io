@@ -6,6 +6,7 @@ I'm Never Satisfied, I'm Never Satisfied
 
 (wow wow wow, wow wow wow)
 
+
 生まれたばっかの火種を
 우마레타밧카노 히다네오
 갓 태어난 불씨를
@@ -29,6 +30,7 @@ I'm Never Satisfied, I'm Never Satisfied
 どんな不安も破るためにあれ
 돈나 후안모 야부루 타메니 아레
 어떤 불안도 깨뜨려 버리기 위해
+
 
 音の鳴る方へ手を伸ばして
 오토노 나루호에 테오 노바시테
@@ -54,7 +56,8 @@ I'm Never Satisfied, I'm Never Satisfied
 와타시노 혼키니 츠이테키테네
 내 전력에 따라와봐
 
-TARINAI　こんなもんじゃない
+
+TARINAI[1]　こんなもんじゃない
 TARIANI 콘나몬쟈나이
 TARINAI 이런건 아냐
 
@@ -90,6 +93,7 @@ I'm Never Satisfied, I'm Never Satisfied
 
 (wow wow wow, wow wow wow)
 
+
 仄暗い青い炎が
 호노구라이 아오이 호노가
 어슴푸레한 푸른 불꽃이
@@ -114,7 +118,8 @@ I'm Never Satisfied, I'm Never Satisfied
 돈나 미라이모 야부루 사키니 아루
 어떤 미래라도 부숴버릴 그 앞에 있어
 
-AITAI　諦めちゃいない
+
+AITAI[2]　諦めちゃいない
 AITAI 아키라메챠이나이
 AITAI 포기하진 않았어
 
@@ -150,6 +155,7 @@ I'll Be Not Satisfied, I'll Be Not Satisfied
 
 I'll Be Not Satisfied, I'll Be Not Satisfied
 
+
 夢にまで見た眩しい世界
 유메니마데 미타 마부시이 세카이
 꿈속에까지 나온 눈부신 세상
@@ -173,6 +179,7 @@ I'll Be Not Satisfied, I'll Be Not Satisfied
 わたしの本気についてこれる？
 와타시노 혼키니 츠이테코레루?
 내 전력을 따라올 수 있겠어?
+
 
 TARINAI　こんなもんじゃない
 TARINAI 콘나몬쟈나이
@@ -201,6 +208,7 @@ TARINAI 아직 끝난 건 아냐
 All Out, I'm Going All Out!　一緒に行こうよ
 All Out, I'm Going All Out! 잇쇼니 이코오요
 All Out, I'm Going All Out! 같이 나아가자
+
 
 I'm Never Satisfied, I'm Never Satisfied
 

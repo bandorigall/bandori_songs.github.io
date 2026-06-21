@@ -387,7 +387,7 @@ function metaInfo(row) {
     const artist = (row["원곡가수"] || "").trim();
     let badge = "", desc = "";
     if (type.includes("오리지널")) badge = '<span class="badge badge-original">ORIGINAL</span>';
-    else if (type.includes("타이업")) { badge = '<span class="badge badge-tieup">TIE-UP</span>'; if (artist) desc = `Original by ${artist}`; }
+    else if (type.includes("타이업")) { badge = '<span class="badge badge-tieup">TIE-UP</span>'; if (artist) desc = `with ${artist}`; }
     else if (type.includes("커버")) { badge = '<span class="badge badge-cover">COVER</span>'; if (artist) desc = `Original by ${artist}`; }
     let h = `<div class="meta-info"><div class="meta-top">${badge}<span class="release-date">${escapeHtml(date)}</span></div>`;
     if (desc) h += `<span class="meta-desc">${escapeHtml(desc)}</span>`;

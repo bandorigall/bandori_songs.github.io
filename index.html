@@ -205,10 +205,37 @@
         .ly-ko  { font-size: 14px; color: #e64980; font-weight: 500; }
         .close-btn { font-size: 28px; cursor: pointer; border: none; background: none; color: #ccc; }
 
+        /* 하단 미니 플레이어 */
+        .mini-player {
+            display: none; position: fixed; right: 20px; bottom: 20px;
+            width: 320px; max-width: calc(100vw - 40px);
+            background: #fff; border-radius: 14px; overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3); z-index: 1500;
+            animation: slideUp 0.25s ease;
+        }
+        .mini-player.open { display: block; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .mini-player-bar {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 10px 8px 14px; background: #333; color: #fff;
+        }
+        .mini-player-title {
+            flex: 1; font-size: 13px; font-weight: 600;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .mini-player-close {
+            border: none; background: none; color: #fff; font-size: 22px;
+            line-height: 1; cursor: pointer; padding: 0 4px; opacity: 0.8;
+        }
+        .mini-player-close:hover { opacity: 1; }
+        .mini-player-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+        .mini-player-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
         @media (max-width: 600px) {
             th { display: none; }
             .tab-group { grid-template-columns: repeat(3, 1fr); }
             :root { --logo-height: 100px; }
+            .mini-player { right: 10px; bottom: 10px; width: calc(100vw - 20px); }
         }
     </style>
 </head>
@@ -227,6 +254,13 @@
 <div id="image-modal" class="image-overlay" onclick="closeImage()">
     <span class="image-close">&times;</span>
     <img id="image-full" src="" alt="">
+</div>
+<div id="mini-player" class="mini-player">
+    <div class="mini-player-bar">
+        <span id="mini-player-title" class="mini-player-title"></span>
+        <button class="mini-player-close" onclick="closePlayer()" title="닫기">&times;</button>
+    </div>
+    <div class="mini-player-frame" id="mini-player-frame"></div>
 </div>
 <div id="lyrics-modal" class="modal-overlay" onclick="closeModal()">
     <div class="modal-box" onclick="event.stopPropagation()">
@@ -361,9 +395,28 @@ function metaInfo(row) {
     return h;
 }
 
-function linkBtn(url) {
+// 유튜브 URL → 영상 ID 추출 (youtu.be / watch?v= / embed 모두 대응)
+function youtubeId(url) {
+    if (!url) return "";
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
+    return m ? m[1] : "";
+}
+
+function linkBtn(url, title) {
     if (!url || !url.trim().startsWith("http")) return "";
-    return `<a href="${escapeHtml(url)}" target="_blank" class="btn btn-link">Listen</a>`;
+    const vid = youtubeId(url);
+    if (vid) {
+        const btn = document.createElement("a");
+        btn.className = "btn btn-link";
+        btn.textContent = "▶ Listen";
+        btn.href = url;            // 유튜브가 아닌 환경/새창 폴백용
+        btn.addEventListener("click", e => {
+            e.preventDefault();
+            playSong(vid, title, url);
+        });
+        return btn;
+    }
+    return null; // 비유튜브 링크는 아래에서 a 태그로 처리
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -402,7 +455,14 @@ function renderBand(rows) {
         const tr = document.createElement("tr");
         const td1 = document.createElement("td"); td1.appendChild(wrap);
         const td2 = document.createElement("td"); td2.innerHTML = metaInfo(row);
-        const td3 = document.createElement("td"); td3.innerHTML = linkBtn(row["링크"]);
+        const td3 = document.createElement("td");
+        const rawLink = (row["링크"] || "").trim();
+        const node = linkBtn(rawLink, titleJp);
+        if (node) td3.appendChild(node);
+        else if (rawLink.startsWith("http")) {
+            // 유튜브가 아닌 링크는 기존처럼 새 탭으로
+            td3.innerHTML = `<a href="${escapeHtml(rawLink)}" target="_blank" class="btn btn-link">Listen</a>`;
+        }
         tr.append(td1, td2, td3);
         tbody.appendChild(tr);
     }
@@ -457,7 +517,26 @@ function closeImage() {
     document.getElementById("image-full").src = "";
     document.body.style.overflow = "auto";
 }
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); closeImage(); } });
+// ─────────────────────────────────────────────────────────────
+// 하단 미니 플레이어 (유튜브 임베드)
+// ─────────────────────────────────────────────────────────────
+function playSong(vid, title, fallbackUrl) {
+    const player = document.getElementById("mini-player");
+    const frame = document.getElementById("mini-player-frame");
+    document.getElementById("mini-player-title").textContent = title || "";
+    // 이미 같은 영상이면 다시 만들지 않음
+    const src = `https://www.youtube.com/embed/${vid}?autoplay=1&rel=0`;
+    frame.innerHTML =
+        `<iframe src="${src}" title="${escapeHtml(title || "")}" ` +
+        `allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    player.classList.add("open");
+}
+function closePlayer() {
+    const player = document.getElementById("mini-player");
+    player.classList.remove("open");
+    document.getElementById("mini-player-frame").innerHTML = ""; // 재생 중지
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); closeImage(); closePlayer(); } });
 
 function openTab(idx) {
     document.querySelectorAll(".content").forEach(c => c.classList.remove("active"));

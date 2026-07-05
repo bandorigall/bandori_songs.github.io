@@ -34,8 +34,51 @@ fi
 echo ""
 echo "[OK] 모든 작업이 성공적으로 완료되었습니다!"
 
-# 5. 배포된 GitHub Pages 주소를 기본 브라우저로 열기 (OS별)
+# 5. 이 커밋의 GitHub Pages 배포가 끝날 때까지 기다린 뒤 브라우저 열기
 URL="https://bandorigall.github.io/bandori_songs.github.io/"
+REPO="bandorigall/bandori_songs.github.io"
+PUSHED_SHA="$(git rev-parse HEAD)"
+
+if command -v gh >/dev/null 2>&1; then
+    echo "[+] Waiting for GitHub Pages to deploy commit ${PUSHED_SHA:0:7} ..."
+    MAX_WAIT=300   # seconds
+    INTERVAL=5
+    WAITED=0
+    DEPLOYED=0
+    # deployments API(github-pages 환경)로 추적. 레거시 pages/builds 엔드포인트는
+    # 새 배포를 제때 반영하지 못해 무한 대기가 발생하므로 사용하지 않는다.
+    while [ "$WAITED" -lt "$MAX_WAIT" ]; do
+        DEPLOY_ID="$(gh api "repos/$REPO/deployments?sha=$PUSHED_SHA&environment=github-pages&per_page=1" \
+                        --jq '.[0].id' 2>/dev/null)"
+        if [ -n "$DEPLOY_ID" ] && [ "$DEPLOY_ID" != "null" ]; then
+            STATE="$(gh api "repos/$REPO/deployments/$DEPLOY_ID/statuses?per_page=1" \
+                        --jq '.[0].state' 2>/dev/null)"
+            case "$STATE" in
+                success)
+                    echo "[OK] Pages deploy completed for ${PUSHED_SHA:0:7}."
+                    DEPLOYED=1
+                    break
+                    ;;
+                error|failure)
+                    echo "[ERROR] Pages deploy $STATE for ${PUSHED_SHA:0:7}. Opening site anyway."
+                    break
+                    ;;
+            esac
+        else
+            STATE="pending"
+        fi
+        printf '    ... state=%s (%ss elapsed)\r' "${STATE:-pending}" "$WAITED"
+        sleep "$INTERVAL"
+        WAITED=$((WAITED + INTERVAL))
+    done
+    echo ""
+    if [ "$DEPLOYED" -ne 1 ] && [ "$WAITED" -ge "$MAX_WAIT" ]; then
+        echo "[i] Timed out waiting for deploy (${MAX_WAIT}s). Opening site anyway."
+    fi
+else
+    echo "[i] 'gh' not found; cannot track deploy status. Opening site directly."
+fi
+
 echo "[+] Opening $URL ..."
 case "$(uname -s)" in
     MINGW*|MSYS*|CYGWIN*)   # Windows (Git Bash / MSYS / Cygwin)

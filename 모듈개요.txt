@@ -1,0 +1,75 @@
+================================================================
+발매곡목록 (bandori_songs.github.io) — 모듈 개요 (기술 명세)
+================================================================
+
+0. 목적
+  뱅드림 전 밴드의 오리지널 발매곡 목록과 번역 가사를 밴드별로 제공한다.
+  index.html이 브라우저에서 CSV/가사 파일을 직접 fetch해 렌더하므로
+  HTML 생성 단계가 없다(데이터만 갱신하면 반영). 배포: GitHub Pages.
+
+1. 저장소 구성
+  {밴드}.csv                 밴드별 곡 메타데이터(단일 소스).
+  {밴드}_lyrics_cache.txt    가사 크롤링 캐시(원어/발음/한국어 통합).
+  lyrics/제목(원어).txt      곡별 가사 파일(3줄 블록).
+  {밴드}.webp/.png/.jpg      밴드 로고/자켓 등.
+  index.html                 프런트(CSV·lyrics fetch → JS 렌더). 생성 단계 없음.
+  nav.js                     공통 상단 네비게이션 바.
+  lyrics_collector.py        나무위키 가사 크롤러(undetected_chromedriver).
+  cache_to_files.py          캐시 → lyrics/txt 저장 + CSV 링크 동기화.
+  update_links.py            공식 재생목록 기준 유튜브 링크 일괄 교체.
+  dc_lyrics_collector.py     디시 소스 가사 수집 보조.
+  legacy/                    舊 정적 HTML 생성 파이프라인(convert_html.py 등). 미사용.
+  workflow.txt / 가이드라인.txt / [] 사용법.txt   운영 문서.
+  urls.txt / [] git_auto.sh
+
+  밴드 식별자: poppin_party, afterglow, roselia, pastel_palettes,
+    hello_happy_world, morfonica, ras, mygo, ave, others, millsage,
+    ikkadumbrock, toge, yumemita.
+
+2. CSV 스키마 ({밴드}.csv, 컬럼 순서 고정)
+    TJ번호, 제목(원어), 제목(한국어), "발매일 / 커버일", 앨범커버,
+    원곡가수, 곡유형, 링크, 번역가사 링크
+  규칙:
+    - "발매일 / 커버일"은 슬래시 양옆 공백 필수(舊 convert_html.py 파서 호환).
+    - 정렬: 발매일 오름차순.
+    - 제목(원어): 공식 디스코그래피 표기 그대로(전각/기호 포함).
+    - 제목(한국어): 원어가 영어 전용(한글·가나·한자 없음)이면 공백.
+    - 링크: 공식 유튜브 밴드별 오리지널 재생목록의 개별 영상 URL.
+    - 앨범커버: 공식(bang-dream.com/en.bang-dream.com) og:image만. 릴리스당 1회.
+    - 번역가사 링크: 보통 나무위키 곡 문서 URL(없으면 출처 URL 수동).
+
+3. 가사 파일 형식 (lyrics/제목(원어).txt)
+    한 블록 = 3줄: 일본어 원문 / 발음(한글) / 한국어 번역.
+    블록 사이 빈 줄. 반복 후렴도 실제 음원 순서대로 전부 기재.
+    파일명은 CSV 제목(원어)와 100% 일치(전각기호 포함).
+
+4. 가사 수집 파이프라인
+  4.1 lyrics_collector.py {밴드} [크롬버전]
+      - 밴드명 인자 필수(생략 시 morfonica로 오염).
+      - undetected_chromedriver로 나무위키 각 곡 페이지 로드(Cloudflare 우회).
+      - EXTRACT_JS: td 중 <br> 10개 초과 & 한국어 & (일본어∨라틴) 혼재인
+        최다 br 셀을 가사로 탐지. innerHTML을 <br> 기준 분할해 라인화.
+      - NAMU_OVERRIDES: 자동 규칙으로 못 잡는 문서명 예외 매핑(대소문자/전각 등).
+      - {밴드}_lyrics_cache.txt에 "제목:/URL:/가사:/...<<<END>>>" 형식 append(기존 스킵).
+      - {밴드}.csv 번역가사 링크 자동 갱신.
+  4.2 cache_to_files.py {밴드}  (Windows: PYTHONUTF8=1 PYTHONIOENCODING=utf-8)
+      - 캐시 파싱(구분자 "\n<<<END>>>\n") → lyrics/제목.txt 생성 + CSV 링크 동기화.
+  4.3 update_links.py
+      - PLAYLIST_MAP(제목(원어)→유튜브 URL)으로 CSV 링크 컬럼 교체.
+      - yt-dlp --flat-playlist로 재생목록 추출, 영상 ID 기준 교차검증(누락/오타 탐지).
+
+5. 프런트 (index.html)
+  - 브라우저에서 {밴드}.csv와 lyrics/제목.txt를 직접 fetch해 렌더(JS).
+  - 곡/가사 추가 시 CSV·lyrics만 갱신하면 즉시 반영. HTML 재생성 불필요.
+
+6. 데이터 출처 규칙(요약)
+  - 발매일: 공식 디스코그래피 発売日(유튜브 업로드일/팬위키 금지).
+  - 오리지널 판정: Bestdori songs API tag=="normal"(=="anime"는 커버, 제외).
+  - 게임 전용곡(공식 CD자켓 無)만 Bestdori 인게임 자켓/publishedAt 허용.
+  - 상세 절차/트러블슈팅: workflow.txt·가이드라인.txt 참조.
+
+7. 설계 결정/제약
+  - HTML 생성기 폐지 → fetch 기반 렌더로 전환(legacy/에 舊 파이프라인 보관).
+  - 밴드명은 모든 스크립트에서 필수 인자(기본값 morfonica 오염 방지).
+  - Windows 콘솔 cp949 출력 폭사 방지 위해 PYTHONUTF8=1 강제.
+  - 나무위키는 WebFetch 403(Cloudflare) → undetected_chromedriver/curl+UA 사용.

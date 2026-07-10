@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set +H  # '!' 히스토리 확장 비활성화
+
+# 0. 스크립트 자신의 폴더로 이동 (어디서 실행하든 올바른 저장소에서 동작)
+cd "$(dirname "$0")" || exit 1
+
 # 1. 변경사항 추가
 echo "[+] Adding changes..."
 git add .

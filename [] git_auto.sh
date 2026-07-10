@@ -40,6 +40,9 @@ fi
 echo ""
 echo "[OK] 모든 작업이 성공적으로 완료되었습니다!"
 
+# push_all.sh 등에서 SKIP_DEPLOY_WAIT=1 로 부르면 배포 대기/브라우저 열기 없이 즉시 종료
+[ -n "$SKIP_DEPLOY_WAIT" ] && exit 0
+
 # 5. 이 커밋의 GitHub Pages 배포가 끝날 때까지 기다린 뒤 브라우저 열기
 URL="https://bandorigall.github.io/bandori_songs.github.io/"
 REPO="bandorigall/bandori_songs.github.io"

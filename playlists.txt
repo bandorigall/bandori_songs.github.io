@@ -1,0 +1,40 @@
+================================================================
+밴드별 공식 유튜브 오리지널곡 재생목록 (곡 추가 시 교차검증 기준)
+================================================================
+- 새 곡 추가·링크 갱신 절차는 workflow.txt / 가이드라인.txt 참고.
+- 여기 URL이 "링크 컬럼(공식 재생목록)"과 "영상 ID 교차검증"의 1차 출처.
+- 곡 추출:  PYTHONUTF8=1 yt-dlp --flat-playlist --print "%(id)s\t%(title)s" [URL]
+- 형식:  {밴드식별자} = {대표곡 워치URL}  |  playlist: {재생목록URL}
+================================================================
+
+poppin_party = https://www.youtube.com/watch?v=sk7nYFsnLto
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1sX3ATFXDZszwwkQsegwrpE
+
+afterglow = https://www.youtube.com/watch?v=O3ZcEs4b-uw
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1s-I6Ct5JsnCPmg84jtenda
+
+pastel_palettes = https://www.youtube.com/watch?v=l4UW7aTKGiQ
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1ubu3QDqIrUqauc15qHNoia
+
+roselia = https://www.youtube.com/watch?v=P9PXzNniuaY
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vwpi5JQho-J1ZLhynltBo9
+
+hello_happy_world = https://www.youtube.com/watch?v=f5aGrmFiDGc
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1tqI6zVh5RiqPxE3pw0g-d9
+
+morfonica = https://www.youtube.com/watch?v=GOU_X0KK-jo
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vIj_3GNgmIwf0teEEdCe6K
+
+ras = https://www.youtube.com/watch?v=5AL7kBxbMI8
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1ux8Nr9VrWI0VAEfn2e3QoX
+
+mygo = https://www.youtube.com/watch?v=fwTsHwFzOlg
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1viuwO01KeX--cUvLxsbE8v
+
+ave = https://www.youtube.com/watch?v=RTgev9ZkivE
+  playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vuaORiy4Wjtmaoi_Qt8Klb
+
+# ↓ 공식 재생목록 URL 미확보 (곡 추가 시 URL 채울 것)
+mugendai  = (무겐다이 / 無限大 — 공식 재생목록 URL 미확보)
+millsage  = (밀싸주 — 공식 재생목록 URL 미확보)
+ikkadumbrock = (덤락 / 一花dumb rock — 공식 재생목록 URL 미확보)

@@ -48,6 +48,7 @@ ikkadumbrock / toge / yumemita 등 각 밴드 식별자.
   update_links.py            ← 재생목록 기준 링크 교체
   index.html                 ← CSV/lyrics 를 브라우저에서 fetch 해 렌더 (JS)
   legacy/                    ← 옛 정적 HTML 생성 파이프라인 (convert_html.py 등)
+  playlists.txt              ← 밴드별 공식 유튜브 재생목록 URL 모음(교차검증 1차 출처)
   workflow.txt               ← (이 파일)
 
 ================================================================

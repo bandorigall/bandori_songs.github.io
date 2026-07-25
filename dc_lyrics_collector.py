@@ -8,21 +8,30 @@ lyrics/제목(원어).txt 로 저장. ave.csv 의 '번역가사 링크'(DC) 기�
 - 맨 앞 크레딧(작사/작곡/일러스트/MV/Twitter)·잡담 블록 제거
 - 이미 lyrics/ 에 있는 곡은 스킵
 
-사용:  python dc_lyrics_collector.py --dry [제목]   # 미리보기
-       python dc_lyrics_collector.py                # 실제 저장
+사용:  python dc_lyrics_collector.py [밴드] [--dry] [제목]
+       python dc_lyrics_collector.py                 # 기본 ave.csv, 실제 저장
+       python dc_lyrics_collector.py millsage --dry  # millsage.csv 미리보기
+       python dc_lyrics_collector.py ikkadumbrock    # ikkadumbrock.csv 저장
+  ※ 밴드 인자는 {밴드}.csv 파일이 존재하는 식별자여야 함(없으면 ave 로 폴백).
 """
 import csv, sys, os, re, time, urllib.request
 from pathlib import Path
 from bs4 import BeautifulSoup
 
 BASE = Path(__file__).parent
-CSV = BASE / "ave.csv"
 LYRICS = BASE / "lyrics"
+
+# 첫 번째 비옵션 인자가 {밴드}.csv 로 존재하면 밴드로 채택, 아니면 곡 필터로 사용
+_args = [a for a in sys.argv[1:] if not a.startswith("--")]
+BAND = "ave"
+if _args and (BASE / f"{_args[0]}.csv").exists():
+    BAND = _args.pop(0)
+CSV = BASE / f"{BAND}.csv"
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0 Safari/537.36")
 
 DRY = "--dry" in sys.argv
-ONLY = [a for a in sys.argv[1:] if not a.startswith("--")]
+ONLY = _args   # 밴드 인자 소비 후 남은 비옵션 인자 = 곡 제목 필터
 
 CREDIT = re.compile(r"(작사|작곡|편곡|일러스트|illust|MV|Twitter|@|참고|보컬|영상|제작|믹싱|마스터)", re.I)
 

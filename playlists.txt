@@ -35,6 +35,7 @@ ave = https://www.youtube.com/watch?v=RTgev9ZkivE
   playlist: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vuaORiy4Wjtmaoi_Qt8Klb
 
 # ↓ 공식 재생목록 URL 미확보 (곡 추가 시 URL 채울 것)
-mugendai  = (무겐다이 / 無限大 — 공식 재생목록 URL 미확보)
+yumemita  = (夢限大みゅーたいぷ / 무겐다이 뮤타입 — 공식 재생목록 URL 미확보)
+            ※ 곡 목록은 공식 채널 업로드(UUeXzCxZsDcaF5xI68fK5owA)로 확인
 millsage  = (밀싸주 — 공식 재생목록 URL 미확보)
 ikkadumbrock = (덤락 / 一花dumb rock — 공식 재생목록 URL 미확보)

@@ -56,3 +56,14 @@
 ■ 운영 요약
   1) CSV 행 추가 → 2) lyrics_collector.py {밴드} → 3) cache_to_files.py {밴드}
   → index.html 새로고침이면 반영. 링크 갱신은 update_links.py.
+
+■ 2026-08-14 유메미타(무겐다이 뮤타입) 신곡 추가
+  - うちゅうのふしぎ(우주의 신비) 1행 추가 + lyrics/うちゅうのふしぎ.txt 저장.
+    · 유튜브: TedsUWY90Vs (공식 채널 UUeXzCxZsDcaF5xI68fK5owA 최신 업로드)
+    · 발매일 2026-08-14 (YouTube "Released on" = 디지털 배신일).
+      ※ CD는 5th Single「これはぼくたちの生存のあらすじ」(発売日 2026-09-30) 2번 트랙.
+    · 커버: 디지털 단독 discographies 페이지 없음 → 규칙대로 수록 릴리스(5th Single)
+      자켓 재사용, 즉 これはぼくたちの生存のあらすじ 행과 동일 URL.
+    · 가사: DC 념글 no=6414654, dc_lyrics_collector.py 로 추출(1435자).
+  - [다음할일] 같은 채널 최신 업로드 "一番のひかり"(9YjehFo3hAw)도 미등록 상태 —
+    발매일/커버/가사 확보되면 추가.

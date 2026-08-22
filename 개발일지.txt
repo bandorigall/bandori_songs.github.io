@@ -67,3 +67,19 @@
     · 가사: DC 념글 no=6414654, dc_lyrics_collector.py 로 추출(1435자).
   - [다음할일] 같은 채널 최신 업로드 "一番のひかり"(9YjehFo3hAw)도 미등록 상태 —
     발매일/커버/가사 확보되면 추가.
+
+■ 2026-08-22 커버곡 2건 추가 (MyGO / millsage)
+  - mygo.csv: シャルル(샤를) 2026-08-21, YouTube IKtjzy0uDkQ, 원곡 balloon(v flower), 커버.
+  - millsage.csv: unravel 2026-08-20, YouTube uZh2qHvJFTI, 원곡 TK from 凛として時雨, 커버.
+    (영어 전용 제목이라 한국어 칸 공백 / millsage.csv 개행 없이 끝나 있어 보정)
+  - 커버는 게임 수록곡이 아닌 유튜브 단독 커버 영상 → 앨범커버는 기존 관례대로
+    i.ytimg.com/vi/{ID}/hqdefault.jpg 사용. bestdori의 동명곡(137 シャルル/408 unravel)은
+    다른 밴드 게임곡이라 무관.
+  - 가사: lyrics_collector.py 로는 실패 → 원인 두 가지.
+    ① execute_script에 넘기는 EXTRACT_JS가 "return" 없이 IIFE만 있어 항상 None 반환.
+    ② 나무위키가 <br> 기반 표를 안 쓰게 바뀜(줄바꿈 텍스트) + 후리가나 <rt>가 본문에 섞임.
+    → 임시 스크립트로 td/div 순회, rt·rp 제거 후 innerText 추출,
+      "짧은 줄 중 가나 포함 비율" 최대인 후보 선택으로 해결. (스크립트는 삭제, 방식만 기록)
+  - 문서명 함정: "샤를"은 인명 문서, 곡은 샤를(VOCALOID 오리지널 곡) / unravel은 unravel(노래).
+  - [다음할일] lyrics_collector.py 를 위 방식(return + rt제거 + 비율 스코어)으로 개선하면
+    앞으로 신곡 수집이 다시 자동화됨. 유메미타 "一番のひかり" 미등록 건도 여전히 남음.

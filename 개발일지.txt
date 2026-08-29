@@ -83,3 +83,19 @@
   - 문서명 함정: "샤를"은 인명 문서, 곡은 샤를(VOCALOID 오리지널 곡) / unravel은 unravel(노래).
   - [다음할일] lyrics_collector.py 를 위 방식(return + rt제거 + 비율 스코어)으로 개선하면
     앞으로 신곡 수집이 다시 자동화됨. 유메미타 "一番のひかり" 미등록 건도 여전히 남음.
+
+■ 2026-08-30 00:13 신곡 3건 추가
+  - yumemita.csv: 一番のひかり(최고의 빛) 2026-08-07 / 9YjehFo3hAw,
+    夢はトゥルーエンド！(꿈은 트루 엔드!) 2026-08-28 / eZG4sXy0zPM. 둘 다 디지털 단독 싱글.
+    · 커버는 공식 뉴스 og:image 사용(news/2379, news/2395) — 전용 discographies 페이지는 없다.
+      ★신곡 자켓 찾는 최단 경로: bang-dream.com/news/ 목록에서 "○○がデジタルリリース！" 글 → og:image.
+      (discographies 목록은 발매예정 CD만 실려 있어 디지털 단독곡은 안 나온다)
+    · 발매일은 유튜브 Topic 영상 설명의 "Released on"(업로드 다음날인 경우 있음).
+    · 번역가사 링크는 비워 둠 — 방갤 검색 결과 두 곡 모두 가사 번역글이 아직 없다. 생기면 채울 것.
+  - millsage.csv: 青のすみか(푸른 거처) 2026-08-27 / XYpcz_mI4ck, 원곡 キタニタツヤ, 커버.
+    · 커버곡 뉴스의 og:image는 1120x630 배너라 자켓이 아님 → 관례대로 i.ytimg hqdefault 사용.
+  - 신곡 탐지법(요청 3~4회로 끝남): 유튜브 채널 RSS
+    https://www.youtube.com/feeds/videos.xml?channel_id=<Topic채널ID> +  bang-dream.com/news/ 1페이지.
+    (유메미타 Topic = UCeXzCxZsDcaF5xI68fK5owA / millsage Topic = UCLAhZE3QHRPTicYKG0iD5Dw)
+  - 미수록 판단: supremacy(CV.内田真礼)「disobedience」, パラレルボーカル「私の心はチョココロネ」는
+    index.html의 밴드 CSV 목록에 없는 아티스트라 제외.

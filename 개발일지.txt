@@ -151,3 +151,25 @@
     ② 줄바꿈 CRLF → LF 변환. 이 스크립트만 CRLF라 리눅스 bash 가
        "$'\r': 명령어를 찾을 수 없음" 으로 죽고 git add . 가 '.^M' 을 경로로 넘겨 실패했다.
   - 커밋 신원 주의: 이 레포 훅이 tksqhddnfl5 / snu.ac.kr 을 차단한다. bandorigall 로만 커밋.
+
+■ 2026-09-02 17:52 커버 썸네일 검은테두리 수정 + 가사 보충
+  - 앨범커버 i.ytimg 썸네일 규칙 변경: hqdefault(480x360, 16:9 영상이면 위아래 검은 띠가
+    이미지에 구워져 있음 → index.html 썸네일이 object-fit:cover 로 정사각 크롭해서 검은 테두리)
+    → maxresdefault.jpg(1280x720, 띠 없음) 로 전량 교체. 16건 성공.
+    · maxresdefault 404인 저해상도 업로드 5건(3ye4lnEsJRY/9RNcp7rLecQ/swsu_JBv6Ug/
+      tAZGnS1FKRE/uVGIGeTPQVM)은 hq720도 404 → mqdefault.jpg(320x180, 역시 띠 없음) 사용.
+    ★규칙: 유튜브 썸네일 쓸 땐 maxresdefault > mqdefault. hqdefault 금지(검은 띠).
+  - ★사고 발견/복구: 이 워크스페이스의 lyrics/ 에 tracked 495개 중 302개가 worktree에서
+    사라져 있었다(git status "AD"). .동기화휴지통/20260902_165501_up/발매곡목록/lyrics 에
+    남아 있어 거기서 복사 복구(198→500개). 이 상태로 커밋했으면 가사 302개가 삭제됐음.
+    ※ 발매곡목록/.git/index.lock 이 남아 있어 git checkout 이 불가했다(락 잔재, 미해결).
+      커밋 전에 락 정리 + lyrics 개수 확인할 것.
+  - 신규 가사 3건 작성(utaten 원문 + 직접 번역/발음):
+    lyrics/残酷な天使のテーゼ.txt (utaten ja00003143, 아웃트로 "人は愛をつむぎながら…" 절은
+      utaten에 없어 미포함), lyrics/青のすみか.txt (qa30621043), lyrics/イケナイ太陽.txt (jb10707524).
+    · utaten 추출법: /lyric/{code}/ 의 div.hiragana 에서 <span class="rt">(후리가나) 제거 후 <br>→개행.
+      검색: https://utaten.com/search?title={URL인코딩}&show_kind=1 → href="/lyric/xxxx/".
+  - ★오류 교정: イケナイ太陽 원곡가수는 関ジャニ∞ 가 아니라 ORANGE RANGE (2007 17th 싱글).
+    ikkadumbrock.csv 수정.
+  - [남은 것] 유메미타 一番のひかり / 夢はトゥルーエンド！ 는 utaten에도 원문이 없고 방갤 번역글도
+    없어 가사 보류(지어내지 않음). 나무위키는 curl 302/404로 여전히 직접 접근 불가.

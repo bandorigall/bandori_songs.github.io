@@ -9,11 +9,44 @@ cd "$(dirname "$0")" || exit 1
 echo "[+] Adding changes..."
 git add .
 
+# 1-a. 훅 실행 가능 여부 판정 + 신원 가드
+#      이 리포는 구글드라이브(rclone) 마운트 위에 있을 수 있고, 그 경우 .git/hooks 에
+#      실행 권한이 붙지 않아 git 이 "cannot exec ... 허가 거부" 로 죽는다.
+#      → 훅을 못 쓰는 컴에서는 --no-verify 로 우회하되, 훅이 하던 신원 검사를 여기서 직접 한다.
+#      (컴퓨터마다 다른 설정을 .git/config 에 넣으면 드라이브로 공유되어 다른 컴이 깨지므로
+#       core.hooksPath 같은 건 쓰지 않는다.)
+FORBIDDEN='tksqhddnfl5\|snu\.ac\.kr'
+IDENT="$(git var GIT_AUTHOR_IDENT 2>/dev/null) $(git var GIT_COMMITTER_IDENT 2>/dev/null)"
+if echo "$IDENT" | grep -qi "$FORBIDDEN"; then
+    echo ""
+    echo '###################################################'
+    echo " [ERROR] 금지된 신원 감지: $IDENT"
+    echo " 이 리포는 bandorigall 로만 커밋할 수 있습니다."
+    echo "   git config user.name  bandorigall"
+    echo "   git config user.email bandorigall@gmail.com"
+    echo '###################################################'
+    exit 1
+fi
+
+NOVERIFY=""
+if [ -x .git/hooks/pre-commit ] || [ -x .git/hooks/pre-push ]; then
+    echo "[i] Hooks are executable. Using them."
+else
+    echo "[i] Hooks are not executable (drive mount). Skipping hooks; identity checked above."
+    NOVERIFY="--no-verify"
+fi
+
 # 2. 커밋 (메시지는 실행 시 인자로 받거나 기본값 사용)
 # 사용법: ./git-auto.sh "메시지내용"
 COMMIT_MSG=${1:-"Auto commit - $(date '+%Y-%m-%d %H:%M:%S')"}
-echo "[+] Committing with message: $COMMIT_MSG"
-git commit -m "$COMMIT_MSG"
+
+# 스테이징된 변경이 없으면 커밋 건너뜀
+if git diff --cached --quiet; then
+    echo "[i] No changes to commit. Skipping commit."
+else
+    echo "[+] Committing with message: $COMMIT_MSG"
+    git commit $NOVERIFY -m "$COMMIT_MSG"
+fi
 
 # 3. Pull (원격 저장소 변경사항 가져오기)
 #    --no-edit: 머지 커밋 에디터(vim) 멈춤 방지 / --no-rebase: pull 전략 명시
@@ -30,7 +63,7 @@ fi
 
 # 4. Push
 echo "[+] Pushing to remote..."
-git push
+git push $NOVERIFY
 if [ $? -ne 0 ]; then
     echo ""
     echo " [!!!] 에러 발생: Push 실패! (권한 문제 또는 원격 설정 확인)"

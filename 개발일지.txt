@@ -99,3 +99,37 @@
     (유메미타 Topic = UCeXzCxZsDcaF5xI68fK5owA / millsage Topic = UCLAhZE3QHRPTicYKG0iD5Dw)
   - 미수록 판단: supremacy(CV.内田真礼)「disobedience」, パラレルボーカル「私の心はチョココロネ」는
     index.html의 밴드 CSV 목록에 없는 아티스트라 제외.
+
+■ 2026-09-02 커버곡 전수조사 + 2건 추가 (Ave Mujica / 一家Dumb Rock!)
+  - ave.csv: 残酷な天使のテーゼ(잔혹한 천사의 테제) 2026-08-22, xp6FLDw8d-k, 원곡 高橋洋子.
+    · 밴드 전체가 아니라 "Covered by Doloris from Ave Mujica" (도로리스 단독).
+    · 업로드처가 밴드 채널이 아니라 허브 채널 バンドリちゃんねる☆(UCN-bFIdJM0gQlgX7h6LKcZA)다 — 주의.
+  - ikkadumbrock.csv: イケナイ太陽(나쁜 태양) 2026-08-28, Gwwcu8sSIkM, 원곡 関ジャニ∞. 이 밴드 첫 커버.
+  - 둘 다 앨범커버는 관례대로 i.ytimg hqdefault. イケナイ太陽은 번역가사 없어 링크 공백
+    (나무위키 문서 자체가 없음 — 404 확인).
+
+  ★커버곡 전수조사법(이번에 확립. discographies만 보면 놓친다)
+    - bang-dream.com/discographies 는 "배포 싱글"만 실린다. 유튜브 MV 단독 커버
+      (MyGO シャルル 등)는 아예 안 올라오므로 커버 전수 소스로 부적합.
+      (25페이지 484건 크롤 결과 5밴드 (Cover) 표기는 4건뿐이었음)
+    - 실제 전수 = 밴드별 공식 유튜브 채널 + 허브 채널을 "채널 내 검색"으로 훑기:
+      https://www.youtube.com/channel/<ID>/search?query=Cover / カバー / 歌ってみた
+      → ytInitialData 파싱(videoRenderer.title.runs). 채널 /videos 는 30건까지만 나와서
+        옛 커버는 검색 경로가 필수.
+    - 채널 ID (공식 / Topic)
+      MyGO!!!!!      UC80p_16pSSHA8YmtCVdX51w
+      Ave Mujica     UCrWC59UUMETuCp9IYUdjVbg / Topic UCcUQTshxx-7gwzKa8fZjn6A
+      millsage       UCvhViFXvb5Y83YGEpRX1cvg / Topic UCLAhZE3QHRPTicYKG0iD5Dw
+      一家Dumb Rock!  UCCMYC-gp-EQgz9scK4PLYzA / Topic UCL1AOkcNmJEsSXbbjEgUi7A
+      夢限大みゅーたいぷ UCxL_Vlnhfo46sN6vPHR_4hA / Topic UCeXzCxZsDcaF5xI68fK5owA
+      허브 バンドリちゃんねる☆ UCN-bFIdJM0gQlgX7h6LKcZA
+    - Topic 채널 업로드 = 배포 음원(앨범 단위 OLAK5uy_ 항목)이라 커버 유무 교차검증용으로 유용.
+
+  [보류] 유메미타 멤버 우탓테미타 7건(唱/インキャのキャキャキャ/デビルじゃないもん/
+    エイリアンエイリアン/ぼくたちいつでも しゅわっしゅわ！/回レ!雪月花/KiLLKiSS)은
+    사용자 판단으로 이번엔 제외. yumemita.csv 커버 0건 상태 유지.
+    ※ mygo.csv에는 개인 우탓테미타(少女レイ·栞 등)가 들어 있어 기준이 서로 다름 — 나중에 정리 필요.
+  [확인] millsage·MyGO는 추가분 없음(unravel/青のすみか/シャルル까지 이미 최신).
+  [다음할일] 아워노츠 Music 페이지(bang-dream-on.bushimo.jp/music/)에 소개된
+    青春コンプレックス(MyGO)·オリオンをなぞる(유메미타)·ロウワー(millsage)는 게임 수록 예정분으로
+    아직 음원/MV 미공개 → 공개되면 추가. 신곡 고지는 공식 X @bang_dream_on.

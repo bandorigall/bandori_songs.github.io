@@ -133,3 +133,21 @@
   [다음할일] 아워노츠 Music 페이지(bang-dream-on.bushimo.jp/music/)에 소개된
     青春コンプレックス(MyGO)·オリオンをなぞる(유메미타)·ロウワー(millsage)는 게임 수록 예정분으로
     아직 음원/MV 미공개 → 공개되면 추가. 신곡 고지는 공식 X @bang_dream_on.
+
+■ 2026-09-02 작업공간 이전 (드라이브 마운트 → 로컬)
+  - 증상: 구글드라이브 rclone 마운트 위에서 git 커밋 1회가 15분 넘게 안 끝났다
+    (프로세스가 D 상태로 lyrics/*.txt 를 네트워크에서 하나씩 읽는 중).
+    같은 커밋을 로컬 clone 에서 하니 3초. push 포함 전체가 즉시 끝남.
+  - 그 외 마운트 위 .git 의 위험 신호: .git/gc.pid 에 타 PC(DESKTOP-5QSI4NG) 기록,
+    index.lock 반복 잔재, ls 가 EIO(입력/출력 오류) 반환.
+  - 조치: 작업공간을 ~/홈피_깃헙io 로 옮기고 8개 레포를 GitHub 에서 새로 clone.
+    드라이브는 보관/백업 전용(.git 은 올리지 않는다 — 동기화는 GitHub 담당).
+    ~/홈피_깃헙io/시작.sh(전체 pull) · 종료.sh(전체 커밋·푸시 + 드라이브 백업) 추가.
+    자세한 배경은 ~/홈피_깃헙io/읽어보기.txt.
+  - [] git_auto.sh 수정 2건
+    ① 한국오프이벤/[] update_and_push.sh 에 있던 "훅 실행권한 판정 + --no-verify
+       우회 + 신원 직접검사" 블록을 이식. 드라이브 마운트에선 .git/hooks 에 실행권한이
+       안 붙어 git 이 "cannot exec ... 허가 거부"로 죽기 때문.
+    ② 줄바꿈 CRLF → LF 변환. 이 스크립트만 CRLF라 리눅스 bash 가
+       "$'\r': 명령어를 찾을 수 없음" 으로 죽고 git add . 가 '.^M' 을 경로로 넘겨 실패했다.
+  - 커밋 신원 주의: 이 레포 훅이 tksqhddnfl5 / snu.ac.kr 을 차단한다. bandorigall 로만 커밋.

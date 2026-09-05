@@ -229,3 +229,17 @@
     UA + Referer: https://bang-dream.com/ 를 붙일 것. (404 를 "자켓 없음"으로 오판하지 말 것)
   [다음할일] 디스코그래피에 millsage 1st Single「鳴らす」 発売日 2026년 9월 30일(수) 등재됨.
     수록곡 확정되면 추가. 같은 날 유메미타 5th Single「これはぼくたちの生存のあらすじ」도 발매.
+
+  - 2026-09-05 13:23 공식 재생목록 ↔ CSV 전수 대조 (playlists.txt의 9개 밴드)
+    · yt-dlp --flat-playlist 로 영상 ID 수집 후 CSV 링크의 ID와 대조.
+      poppin_party 80 / afterglow 37 / pastel_palettes 35 / hello_happy_world 37 /
+      morfonica 39 / ras 45 → 누락 0 (완전 일치).
+    · mygo(PL 35, CSV 62) / ave(PL 25, CSV 29): CSV가 재생목록과 다른 영상 ID를 씀.
+      제목 기준으로 재대조하니 실제 누락 0 (표기 차이뿐 —
+      "Symbol I : △"↔"Symbol I: Fire", "天球(そら)のMúsica"↔"天球のMúsica",
+      "春日影 (MyGO!!!!! ver.)"↔"春日影").
+    · roselia: 10th anniv. ver. 6곡(PASSIONATE ANTHEM·陽だまりロードナイト·礎の花冠·
+      BLACK SHOUT·FIRE BIRD·VIOLET LINE)이 재생목록에만 있음. 재녹음 버전이라
+      ★추가할지 미정 → 사용자 판단 필요. 그 외 누락 0.
+    → 결론: 이번 점검 시점 기준 신곡 없음. CSV 수정 없음.
+  [다음 할 일] roselia 10th anniv. ver. 6곡을 목록에 넣을지 결정.

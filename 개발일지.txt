@@ -243,3 +243,29 @@
       ★추가할지 미정 → 사용자 판단 필요. 그 외 누락 0.
     → 결론: 이번 점검 시점 기준 신곡 없음. CSV 수정 없음.
   [다음 할 일] roselia 10th anniv. ver. 6곡을 목록에 넣을지 결정.
+
+  - 2026-09-05 14:24 ★재생목록만 보면 안 됨 — 공식 디스코그래피 페이지가 1차 출처
+    · 앞선 점검은 playlists.txt의 재생목록 9개만 대조해서, 재생목록 URL 미확보 밴드
+      (ikkadumbrock / millsage / yumemita / toge)를 통째로 빠뜨렸다.
+    · 해법: https://bang-dream.com/discographies/ 를 curl 로 긁으면 CD·음악配信이
+      발매일·자켓 이미지 URL과 함께 최신 20건 나온다. 이게 재생목록보다 확실하다.
+      추출: <a href="…/discographies/숫자/"> 블록에서 "20xx年x月x日" + img src.
+    · 재생목록 URL 없는 밴드는 공식 채널 업로드 재생목록(UU + 채널ID에서 UC 제거)으로 대조.
+      一家Dumb Rock! = UCL1AOkcNmJEsSXbbjEgUi7A / millsage = UCLAhZE3QHRPTicYKG0iD5Dw /
+      夢限大みゅーたいぷ = UCxL_Vlnhfo46sN6vPHR_4hA (★채널에 videos·playlists 탭이 없어
+      /videos URL 은 yt-dlp 에러. UU 재생목록으로 받아야 한다).
+    · 결과
+      - ikkadumbrock: ジャイアント・キラー・チューン(2026-09-04 음악配信) 누락 → ★추가함.
+        가사는 갤 번역글 6480837(원어/발음/한국어 3줄)에서 lyrics/ 에 저장.
+        한글 표기 "자이언트 킬러 튠" 은 갤 표기를 따름.
+      - millsage: 업로드 5 = CSV 5, 누락 0.
+      - yumemita: 업로드 267건 중 MV만 걸러 대조 → 실누락 0
+        (영어 제목 MV는 기존 곡 중복: Journey to Exoplanet X=超惑星Xへの旅 등).
+        ★단 「熱風海陸ブシロード～熱き咆哮～」(夢幻戦隊むーたいぷ 명의)는 CSV에 없음 —
+        유닛명이 달라 수록 여부 미정.
+      - 미발매분(9/10 Roselia「この蒼き闇と光」, 9/30 CD 4종)은 대상 아님.
+      - 2026-09-02 音楽配信 パラレルボーカル「私の心はチョココロネ(パラレルver.)」(셔플유닛):
+        others.csv 에 셔플유닛 수록 전례가 없어 ★추가 여부 미정.
+      - toge(트게나시토게아리): GIRLS BAND CRY 채널이 공용이라 이번엔 미점검.
+  [다음 할 일] 熱風海陸ブシロード / パラレルver. 수록 여부 결정, toge 채널 점검.
+  [결정사항] 신곡 점검은 재생목록이 아니라 discographies 페이지를 먼저 본다.

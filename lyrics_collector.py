@@ -46,6 +46,10 @@ NAMU_OVERRIDES = {
     "ノスタルジックレインフォール": "노스탤직 레인폴",
     "魔法少女とチョコレゐト": "마법소녀와 초콜릿",
     "金曜日のおはよう": "금요일의 아침인사",
+    "残酷な天使のテーゼ": "残酷な天使のテーゼ/가사",
+    "Paradisus‐Paradoxum": "Paradisus-Paradoxum",
+    "HONEY": "HONEY(L'Arc~en~Ciel)",
+    "slash": "slash(yama)",
 }
 
 # \u escape 를 JS가 해석하도록 raw string + 실제 유니코드 문자 배제

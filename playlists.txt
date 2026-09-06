@@ -39,3 +39,24 @@ yumemita  = (夢限大みゅーたいぷ / 무겐다이 뮤타입 — 공식 재
             ※ 곡 목록은 공식 채널 업로드(UUeXzCxZsDcaF5xI68fK5owA)로 확인
 millsage  = (밀싸주 — 공식 재생목록 URL 미확보)
 ikkadumbrock = (덤락 / 一花dumb rock — 공식 재생목록 URL 미확보)
+
+================================================================
+커버곡 재생목록 (BanG Dream! Playlist 채널 UCp1k91hhazPFxvppmTqzqvA)
+================================================================
+※ 오리지널 재생목록과 같은 채널이 밴드별 【All_Cover_Songs】를 따로 운영.
+   채널 /playlists 를 yt-dlp 로 훑으면 전 밴드분이 한 번에 나온다.
+poppin_party      cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vp8_8d8HSpD3J0E7YCliCZ
+afterglow         cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vEIyZmnQNkQ3M8MTa0j_U_
+pastel_palettes   cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1vCjorUR_5qef-nYxEiFTaa
+roselia           cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1tJF_wb_EqMNl-QXzESGCAG
+hello_happy_world cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1u5L-98W_4S4CfIRUnxF0ja
+morfonica         cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1tmPsq23MT-rzp6_PzecPVS
+ras               cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1sfedosOgn5nXvmIL8Qupho
+mygo              cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1t1K9ntwTg_qsDhrgez4ZGZ
+                  (공식 MyGO 채널판: https://www.youtube.com/playlist?list=PLUFFl4hYd1R3DbWVEUf1Nk6LUN8f-yjwX 歌ってみた・カバー)
+ave               cover: https://www.youtube.com/playlist?list=PLkc6qZ_s5R1u4EFuSmfhT_RvSqacaABfG
+yumemita          cover: https://www.youtube.com/playlist?list=PLXc3B7zBCfgw   (Mugendai MewType 【All_Cover_Songs】)
+millsage          cover: https://www.youtube.com/playlist?list=PLDDwdZnGtgPc
+ikkadumbrock      cover: https://www.youtube.com/playlist?list=PLX3y87SvvQwE
+전체 커버 모음     : https://www.youtube.com/playlist?list=PLkc6qZ_s5R1uDCCQdiYGBNU_Ggdg68N1Q
+※ 무지카/무겐다이/밀사주/덤락도 커버 재생목록이 존재한다(위 참고).

@@ -356,3 +356,15 @@
   [남은 2곡] DAYS(FLOW) / MATSURI BAYASHI(KEYTALK)
     — 나무위키에 문서 자체가 없거나(32KB 셸) 마츠리바야시 문서엔 가사 절이 없음.
       다른 출처(utaten 등)엔 한국어 번역이 없어 보류. 지어내지 말 것.
+
+■ 2026-09-06 (마무리) 보류했던 2곡 가사 직접 작성 — 포피파 커버 25/25 완료
+  - 규칙(가이드라인.txt ④ "나무위키에 번역 없으면 직접 생성 후 출처 URL 기입") 적용.
+    보류할 게 아니라 원문을 구해 내가 번역했어야 했다.
+  - 원문 출처 utaten (가이드라인이 1순위로 지정한 곳):
+      DAYS(FLOW)          https://utaten.com/lyric/ja00012182/
+      MATSURI BAYASHI     https://utaten.com/lyric/ka16051208/
+    utaten 검색은 keyword= 가 안 먹고 ?title=&artist_name= 조합이라야 걸린다.
+    본문은 <div class="hiragana"> 안, <span class="rt">(후리가나) 제거하고 <br> 분해.
+  - 발음(한글)·한국어 번역은 직접 작성. CSV 번역가사 링크는 utaten URL로 채움.
+  [결정사항] 가사를 못 찾았을 때 순서: 나무위키 → utaten 등에서 원문 확보 → 직접 번역.
+    "원문조차 없는 경우"에만 보류한다. 번역이 없다는 이유로 보류하지 말 것.

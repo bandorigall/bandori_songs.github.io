@@ -303,3 +303,29 @@
   - ないものねだり(MyGO 커버)은 아워노츠 게임 수록곡이고 공식 유튜브
     영상이 없음(검색 결과 전부 팬 업로드/게임 캡처) → 링크·자켓 확보
     불가로 미추가. 넣으려면 아워노츠 게임 에셋에서 자켓·실장일 필요.
+
+■ 2026-09-06 커버곡 재생목록 전수 확보 + 포피파 커버 25곡 추가
+  - 밴드별 커버 재생목록은 오리지널과 같은 "BanG Dream! Playlist" 채널
+    (UCp1k91hhazPFxvppmTqzqvA)의 【All_Cover_Songs】. 채널 /playlists 를
+    yt-dlp --flat-playlist 로 훑으면 12밴드분+전체합본이 한 번에 나온다.
+    → playlists.txt 하단에 전부 기록. (사용자가 "없다"고 한 무지카·무겐다이·
+      밀사주·덤락도 존재함)
+  - poppin_party.csv 끝에 커버 25행 추가(정렬규칙대로 커버는 뒤·발매일 오름차순).
+    · 발매일 = 유튜브 설명의 "Released on" (Auto-generated 크레딧).
+    · 앨범커버 = i.ytimg.com/vi/{ID}/maxresdefault.jpg (커버 관례).
+    · 한국어 제목 = Bestdori all.5.json musicTitle[4](한섭 공식). 없는 신곡은 직역.
+      ※ Bestdori 한섭 표기를 그대로 따른 결과 チェリボム="Cherry Bomb",
+        ディスカバリー！="Discovery!", 怪物="KAIBUTSU" 로 들어감.
+    · 원곡가수 = ja.wikipedia 로 교차확인. 내 첫 추측이 틀렸던 것들:
+      DAYS of DASH=鈴木このみ(스피어 아님), 君じゃなきゃダメみたい=オーイシマサヨシ,
+      START!! True dreams=Liella!, ディスカバリー！=スタァライト九九組.
+      ※「バンドリ! ガールズバンドパーティ!の楽曲一覧」(ja.wikipedia)에 커버곡
+        OA(원곡아티스트) 열이 있다 — 다음엔 이걸 먼저 볼 것.
+    · 千本桜(Etgy6v3dcBI)는 영상이 unavailable(재생목록 숨김) → 미추가.
+  [다음 할 일]
+    - 나무위키 링크 미확보 5곡: ちゅ、多様性。/ トウキョウ・シャンディ・ランデヴ /
+      ヴァンパイア / 怪物 / DAYS (문서명 후보 전부 없는 문서였음, 칸 비움).
+    - 포피파 커버 25곡 가사 수집(lyrics_collector.py → cache_to_files.py).
+    - 나머지 11밴드 커버곡 CSV 반영.
+  [메모] 나무위키 존재 판정은 응답 길이로 — 없는 문서도 200에 약 32KB 셸이 옴.
+        6만 바이트 미만이면 없는 문서로 본다.

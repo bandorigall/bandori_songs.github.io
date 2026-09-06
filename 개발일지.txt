@@ -427,3 +427,23 @@
       빈 줄 제거 후 3줄씩 묶으면 정확히 떨어진다(루비는 rt/rp 노드 제거 후 innerText).
     · Stay Alive는 나무위키가 동음이의어 문서뿐 → utaten(mo16081815) 원문 + 직접 번역.
   - 가사 파일 후리가나 괄호·각주 잔재 16개 파일 일괄 정제(기존 오리지널 3곡 포함).
+
+■ 2026-09-06 Roselia 커버 27곡 추가 (CSV + 가사 27/27, 총 93곡)
+  - 커버 재생목록 PLkc6qZ_s5R1tJF_wb_EqMNl-QXzESGCAG 전곡(27). 위키 커버표 46곡 중 MV 있는 것만.
+    재생목록에만 있는 スカイクラッドの観測者는 Roselia×いとうかなこ(bandId 49) → Bestdori로 확인.
+  - 발매일: 앱글/파스파레와 동일 기준(初収録CD 공식 発売日).
+    Roselia 커버 앨범 ROZEN HORIZON = 2022-05-18 (bang-dream.com/discographies/3009).
+    Vol.11(2026-11-25 미발매) 수록 HONEY는 Bestdori publishedAt 2026-03-18 사용.
+  - 나무위키 크롤러 실패 10곡 처리:
+    · 문서명 오버라이드 추가: 残酷な天使のテーゼ/가사, Paradisus-Paradoxum(하이픈 U+2010→ASCII),
+      HONEY(L'Arc~en~Ciel), slash(yama). ※CSV 제목의 ‐(U+2010)는 NFKC로도 -로 안 바뀐다.
+    · 신형 문서 텍스트 추출(파스파레 때 만든 방식)으로 5곡:
+      シャルル(샤를(VOCALOID 오리지널 곡)) / 六兆年と一夜物語 / KING(VOCALOID 오리지널 곡) /
+      Realize(스즈키 코노미) / ヒバナ -Reloaded-(불꽃(VOCALOID 오리지널 곡))
+    · ★영어 가사 줄은 "원문+번역" 2줄 블록, 추임새(nanana 등)는 1줄 블록으로 나온다.
+      3줄씩 기계적으로 자르면 어긋남 → 일본어 포함 여부로 블록 길이를 판정해 재구성할 것.
+    · slash / Reweave는 나무위키에 가사 문서 자체가 없음 →
+      utaten(qa30413027 / hw24100419) 원문 + 직접 번역.
+  - 가사 파일 후리가나·각주 정제 38개(기존 로젤리아 오리지널 다수 포함).
+  [다음 할 일] roselia.csv의 'Re:birth day'와 '~ (10th anniv. ver.)' 6곡은 가사 파일 없음(기존 누락).
+    10th anniv. ver.는 원곡 가사 파일을 재사용할지 정할 것.

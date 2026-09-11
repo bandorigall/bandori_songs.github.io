@@ -466,3 +466,19 @@
     · 영어 가사 줄은 발음 줄에 원문을 그대로 두는 방식으로 3줄 형식을 유지.
   - 정리 후 두 밴드의 _lyrics_cache.txt를 현재 lyrics 파일 기준으로 재작성했다.
     (깨진 캐시가 cache_to_files 재실행 때 다시 덮어쓰는 것을 막기 위함)
+
+■ 2026-09-11 20:32 신곡 갱신(공식 디스코그래피 기준)
+  - 수집 방법 갱신: bang-dream.com 은 WP REST 가 열려 있다.
+    https://bang-dream.com/wp-json/wp/v2/discographies?per_page=100&orderby=date&order=desc
+    → 릴리스 제목·수록곡(content)·발매일(acf.cf_disco_date)·자켓(acf.cf_disco_image → /wp-json/wp/v2/media/{id})
+    이 한 번에 나온다. 자켓은 cf_disco_image(800x800), cf_ogimage는 1200x630 배너라 쓰지 말 것.
+    ★공식 유튜브 재생목록은 신곡 반영이 늦다 — 재생목록 대조만으로는 신곡을 놓친다.
+  - 추가 3곡 (배포 완료분만)
+    · roselia.csv  この蒼き闇と光 (2026-09-10 배신, ALI PROJECT 제공 아티스트 타이업)
+    · yumemita.csv in my words / 愛は衝動 (2026-09-11 배신, 애니 ゆめ∞みた #13 삽입곡)
+  - 아직 안 넣은 것(발매일이 미래라 보류): PoPiPa 23rd「スキップ･スランプ･スリッパ」+Amore(10/14),
+    RAS 16th「I AM WHO I AM」(11/04), MyGO 9th「世点彩」(11/11), Ave ミニAlbum「神の名を」(10/21),
+    하로하피 ミニAlbum「MERRY GO SMILE!」(12/16), 덤락 1st「ピースフル・ピーシーズ！」·millsage 1st「鳴らす」(09/30).
+  [다음 할 일] 위 3곡 가사 파일 없음. 나무위키 문서에 아직 가사 절이 없어 크롤러가
+    디스코그래피 틀을 긁어온다(오염 확인 후 캐시 원복함). 가사 올라오면 재수집할 것.
+    ★Re:birth day 도 같은 오염이 재현됨 — 캐시에 없는 곡이라 재수집 대상이 되니 주의.

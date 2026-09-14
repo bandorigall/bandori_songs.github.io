@@ -482,3 +482,20 @@
   [다음 할 일] 위 3곡 가사 파일 없음. 나무위키 문서에 아직 가사 절이 없어 크롤러가
     디스코그래피 틀을 긁어온다(오염 확인 후 캐시 원복함). 가사 올라오면 재수집할 것.
     ★Re:birth day 도 같은 오염이 재현됨 — 캐시에 없는 곡이라 재수집 대상이 되니 주의.
+
+■ 2026-09-13 신곡 갱신 (WP REST 기준, 9/11 이후 배신분 1건)
+  - ikkadumbrock.csv: 革命道中(혁명도중) 커버 2026-09-12, RQ9JDmerqTo, 원곡 アイナ・ジ・エンド(단다단 2기 OP).
+    자켓 ytimg maxresdefault, 가사 나무위키 革命道中 → lyrics/革命道中.txt 48블록.
+    · 이 문서는 정적 HTML 태그 제거 시 "한국어줄+다음 일본어줄"이 붙어 나옴 → 첫 일본어 문자 위치로 분리.
+  - 커밋 1117430 (bandorigall) push.
+
+■ 2026-09-14 23:12 신곡 갱신 (WP REST 기준, 9/13 이후 배신분 1건)
+  - ave.csv: A Song Of Romance / (영어전용, 한국어 제목 공백) / 2026-09-14 / 오리지널.
+    · 출처: 디스코 28202 「A Song Of Romance」 9/14 18:00 전세계 배신. 미니앨범「神の名を」(10/21) 선행곡.
+      작사 Diggy-MO' / 작곡 Diggy-MO'·ÐIK / 편곡 Diggy-MO'.
+    · 링크: Ave Mujica Topic 음원 4VpXO2CggJU (MV는 아직 없음).
+    · 자켓: cf_disco_image media 28203 (3000px png).
+    · 정렬: The Whole Blue World 다음, 커버 앞.
+  - [다음 할 일] A Song Of Romance 가사 파일 없음 → 번역가사 링크 칸 공백(사이트엔 가사 비활성).
+    발매 당일이라 utaten 미등록, 나무위키·방갤 번역글 생기면 lyrics/A Song Of Romance.txt 작성 + 링크 채울 것.
+    MV 공개되면 링크 교체 검토.

@@ -534,3 +534,11 @@
   - 가사: 나무위키 Stellar Stellar "9. 가사" 절 58블록 → lyrics/Stellar Stellar.txt.
     ★이 문서는 가사가 <td> 안이 아니라 <strong> 블록(data-v 속성 붙은 태그)이라 td 휴리스틱이 실패. rp/rt 정규식도 속성 허용(<rp[^>]*>)으로 써야 함.
   - Morfonica 10th Single(2027 봄, 디스코 28253)은 발매 예정이라 보류.
+
+■ 2026-09-26 15:40 신곡 갱신 (WP REST, 9/22 이후 배신분 2건)
+  - ave.csv: Abracadabra / (영어 → 한국어 공백) / 2026-09-24 / 커버(원곡 Lady Gaga) / _SWjjX0ocPw (디스코 28396, 자켓 media 28397).
+  - yumemita.csv: オリオンをなぞる / 오리온을 덧그리다(직역) / 2026-09-23 / 커버(원곡 UNISON SQUARE GARDEN) / ekZUC5KaJFw (디스코 28413, 자켓 28411).
+  - 가사: 나무위키 → lyrics/Abracadabra.txt 50블록(영/영/한), lyrics/オリオンをなぞる.txt 36블록.
+    ★Abracadabra 나무위키 원문에 키릴 е(U+0435)가 섞여 있음(firе, wеst) → 라틴 e로 치환.
+    ★オリオン 문서는 td 휴리스틱 실패(가사가 td 밖) → '가사' 절 텍스트에서 첫 가사줄~다음 태그까지 잘라냄.
+  - 보류: 파라레루보컬「Hello! Wink!(パラレルver.)」10/02 배신 예정(디스코 28381), Morfonica 10th Single.

@@ -542,3 +542,13 @@
     ★Abracadabra 나무위키 원문에 키릴 е(U+0435)가 섞여 있음(firе, wеst) → 라틴 e로 치환.
     ★オリオン 문서는 td 휴리스틱 실패(가사가 td 밖) → '가사' 절 텍스트에서 첫 가사줄~다음 태그까지 잘라냄.
   - 보류: 파라레루보컬「Hello! Wink!(パラレルver.)」10/02 배신 예정(디스코 28381), Morfonica 10th Single.
+
+■ 2026-10-02 23:24 신곡 갱신 (WP REST 기준, 9/23 이후)
+  - 사전 복구: 10/1 git 크래시로 index.lock 잔존 + 인덱스 0파일(전체 D로 보임) → lock 삭제 후 git reset(mixed)로 복구. 작업트리 무손상.
+  - 추가 3곡(모두 오리지널, 번역가사 링크 공백):
+    · yumemita.csv 夢我夢中(무아몽중) 2026-09-28 배신, MV Fp2a-MhCFVw, 자켓 media 28490
+    · millsage.csv 鳴らす(울리다) 2026-09-30 1st Single, MV pZgZXej3OCg, 자켓 media 26621
+    · ikkadumbrock.csv ピースフル・ピーシーズ！(피스풀 피시즈!) 2026-09-30 1st Single, MV v8iMgOM5Lnc, 자켓 media 26622
+  - 커플링(カーネーションの咲く日に·Keep on Riddim·うちゅうのふしぎ·これはぼくたちの生存のあらすじ)은 이미 있음.
+  - 제외: パラレルボーカル「Hello! Wink!(パラレルver.)」(10/2, 기존곡 재가창), Morfonica 10th(2027 봄)·PasPare Pastel Aura(2027-01-13) 미래.
+  [다음할일] 위 3곡 가사 파일 없음(utaten 미등록) → 가사 올라오면 lyrics/{원어제목}.txt 작성 + 링크 채울 것.
